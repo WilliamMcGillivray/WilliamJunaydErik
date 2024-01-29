@@ -1,14 +1,10 @@
-import junit.framework.TestCase;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.awt.*;
 
-public class CarTest extends TestCase {
-
+public class VehicleTest {
     Saab95 saab95;
     Volvo240 volvo240;
 
@@ -16,7 +12,7 @@ public class CarTest extends TestCase {
     public void setUp() throws Exception {
         saab95 = new Saab95();
         volvo240 = new Volvo240();
-        super.setUp();
+
     }
 
     @AfterEach
@@ -41,7 +37,7 @@ public class CarTest extends TestCase {
 
         assertTrue(saab95.getCurrentSpeed() >= 0 && saab95.getCurrentSpeed() <= saab95.getEnginePower() );
     }
-    
+
     @Test
     public void testTurnRight() {
         saab95.turnRight();
@@ -66,6 +62,7 @@ public class CarTest extends TestCase {
         assertEquals(saab95.getColor(), Color.red);
     }
 
+    @Test
     public void testGetModelName() {
         assertEquals(saab95.getModelName(), "Saab95");
     }
@@ -115,10 +112,7 @@ public class CarTest extends TestCase {
 
     @Test
     public void testException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> saab95.brake(-1));
+        assertThrows(IllegalArgumentException.class, () -> saab95.brake(-1));
     }
-
-
-
 
 }
