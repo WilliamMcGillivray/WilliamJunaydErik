@@ -10,7 +10,7 @@ abstract class Vehicle implements Movable {
     private Color color; // Color of the car
     private String modelName; // The car model name
 
-    private int angle; // Direction the car travels in degrees
+    private double angle; // Direction the car travels in degrees
     private Point location;
 
     public Vehicle(int nrDoors, Color color, double enginePower, String modelname){
@@ -24,9 +24,9 @@ abstract class Vehicle implements Movable {
 
     @Override
     public void move() {
-        int angle = Math.toRadians(this.angle);
-        int x = location.getX() + Math.cos(angle) * this.currentSpeed;
-        int y = location.getY() + Math.sin(angle) * this.currentSpeed;
+        double angle = Math.toRadians(this.angle);
+        double x = location.getX() + Math.cos(angle) * this.currentSpeed;
+        double y = location.getY() + Math.sin(angle) * this.currentSpeed;
 
         int xInt = (int) x;
         int yInt = (int) y;
@@ -108,7 +108,6 @@ abstract class Vehicle implements Movable {
         }
         else {throw new IllegalArgumentException("Has to be between 0 and 1");
         }
-
 
     }
 

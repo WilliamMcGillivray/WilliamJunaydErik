@@ -67,7 +67,7 @@ public class CarTransport extends Truck {
         if (!carList.isEmpty() && !rampUp && getCurrentSpeed() == 0) {
             Car carToUnload = carList.pop();
             double x = this.getLocation().getX() - carToUnload.getLength() - 1;
-            double y = (int) this.getLocation().getY();
+            double y = this.getLocation().getY();
 
             int xInt = (int) x;
             int yInt = (int) y;
