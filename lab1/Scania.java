@@ -10,10 +10,10 @@ public class Scania extends Truck {
     }
 
     public void changeFlatbedAngle(int amount) {
-        if (this.getCurrentSpeed() == 0 && amount < 70 && amount >= 0) {
+        if (this.getCurrentSpeed() == 0 && amount <= 70 && amount >= 0) {
             flatbedAngle = amount;
         }
-        else {throw new IllegalArgumentException("The angle has to be lower than 70 degrees and speed = 0");
+        else {throw new IllegalArgumentException("The angle has to be >=0 and <=70 degrees and speed = 0");
         }
     }
 
@@ -32,7 +32,11 @@ public class Scania extends Truck {
             super.startEngine();
 
         }
+        else {
+            throw new IllegalArgumentException("Flatbed needs to be flat");
+        }
     }
+
 
     @Override
     protected double speedFactor() {

@@ -18,7 +18,7 @@ public class CarTransport extends Truck {
     }
 
     @Override
-    public double speedFactor() {
+    protected double speedFactor() {
         return 0.5;
     }
 
@@ -45,7 +45,9 @@ public class CarTransport extends Truck {
 
 
     private boolean isCloseToTruck(Car car) {
-        return car.getY() == this.getY() && (car.getX() - this.getX()) < 0.5;
+
+        return car.getLocation().getY() == this.getLocation().getY() &&
+                (car.getLocation().getX() - this.getLocation().getX()) < 0.5;
     }
 
     public void loadCar(Car car) {
@@ -53,8 +55,8 @@ public class CarTransport extends Truck {
                 !carList.contains(car) && isCloseToTruck(car) && car.getLength() <= maxLengthCar &&
                 car.getWidth() <= maxWidthCar) {
             carList.add(car);
-            car.setY(this.getY());
-            car.setX(this.getX());
+            car.setLocation(this.getLocation());
+
         } else {
             throw new IllegalArgumentException("Can't load because of either size constraints or " +
                     "max number of cars already reached");
@@ -64,7 +66,14 @@ public class CarTransport extends Truck {
     public void unloadCar() {
         if (!carList.isEmpty() && !rampUp && getCurrentSpeed() == 0) {
             Car carToUnload = carList.pop();
-            carToUnload.setX(this.getX() - carToUnload.getLength() - 1);
+            double x = this.getLocation().getX() - carToUnload.getLength() - 1;
+            double y = (int) this.getLocation().getY();
+
+            int xInt = (int) x;
+            int yInt = (int) y;
+
+            Point p = new Point(xInt, yInt);
+            carToUnload.setLocation(p);
         }
     }
 

@@ -10,24 +10,28 @@ abstract class Vehicle implements Movable {
     private Color color; // Color of the car
     private String modelName; // The car model name
 
-    private double angle; // Direction the car travels in degrees
-    private double x;
-    private double y;
+    private int angle; // Direction the car travels in degrees
+    private Point location;
+
     public Vehicle(int nrDoors, Color color, double enginePower, String modelname){
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
         this.modelName = modelname;
-        this.x = 0;
-        this.y = 0;
+        location = new Point();
         stopEngine();
     }
 
     @Override
     public void move() {
-        double angle = Math.toRadians(this.angle);
-        x += Math.cos(angle) * this.currentSpeed;
-        y += Math.sin(angle) * this.currentSpeed;
+        int angle = Math.toRadians(this.angle);
+        int x = location.getX() + Math.cos(angle) * this.currentSpeed;
+        int y = location.getY() + Math.sin(angle) * this.currentSpeed;
+
+        int xInt = (int) x;
+        int yInt = (int) y;
+
+        location.setLocation(xInt, yInt);
     }
 
     @Override
@@ -112,21 +116,15 @@ abstract class Vehicle implements Movable {
         return this.angle;
     }
 
-    public double getX(){
-        return this.x;
+    public Point getLocation() {
+        return location;
     }
 
-    public double getY(){
-        return this.y;
+    protected Point setLocation(Point newLocation) {
+        location.setLocation(newLocation);
+        return location;
     }
 
-    protected double setY(double y){
-        return this.y = y;
-    }
-
-    protected double setX(double x){
-        return this.x = x;
-    }
 
     public String getModelName(){
         return this.modelName;
