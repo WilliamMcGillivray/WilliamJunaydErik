@@ -50,6 +50,8 @@ class CarTransportTest {
         Volvo240 StripWeathers43  = new Volvo240();
         carTransport.loadCar(StripWeathers43);
         assertEquals(carTransport.getCarList().peek(), StripWeathers43);
+
+        assertEquals(StripWeathers43.getLocation(), carTransport.getLocation());
     }
 
     @Test
