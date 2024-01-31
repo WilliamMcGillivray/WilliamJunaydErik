@@ -41,7 +41,6 @@ class ScaniaTest {
     void testStartEngine() {
         scania.startEngine();
         assertEquals(scania.getCurrentSpeed(), 0.1);
-
     }
 
     @Test
