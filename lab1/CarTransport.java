@@ -18,6 +18,11 @@ public class CarTransport extends Truck {
     }
 
     @Override
+    public boolean checkFlatbed() {
+        return rampUp;
+    }
+
+    @Override
     protected double speedFactor() {
         return 0.5;
     }
@@ -75,6 +80,7 @@ public class CarTransport extends Truck {
             Point p = new Point(xInt, yInt);
             carToUnload.setLocation(p);
         }
+        else {throw new IllegalArgumentException("Car list is empty");}
     }
 
     public Stack<Car> getCarList() {

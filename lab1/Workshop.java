@@ -20,13 +20,8 @@ public class Workshop<T extends Car> {
         }
     }
 
-    public T releaseCar(T car) {
-        if (carsInWorkshop.contains(car)) {
-            carsInWorkshop.remove(car);
-            return car;
-        }
-        else {throw new IllegalArgumentException("The specified car is not in the workshop");
-        }
+    public T releaseCar() {
+        return carListTool.unloadCar();
     }
 
     public ArrayList<T> getCarsInWorkshop() {

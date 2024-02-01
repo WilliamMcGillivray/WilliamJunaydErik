@@ -53,7 +53,7 @@ class WorkshopTest {
     @Test
     void releaseCar() {
         theGarage.acceptCar(DocHudson51);
-        theGarage.releaseCar(DocHudson51);
+        theGarage.releaseCar();
         assertFalse(theGarage.getCarsInWorkshop().contains(DocHudson51));
         assertThrows(IllegalArgumentException.class, () -> theGarage.releaseCar(DocHudson51));
 

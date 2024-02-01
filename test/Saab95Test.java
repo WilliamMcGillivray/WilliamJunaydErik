@@ -1,15 +1,15 @@
-import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class Saab95Test extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class Saab95Test {
     Saab95 saab95;
 
     @BeforeEach
     public void setUp() throws Exception {
         saab95 = new Saab95();
-        super.setUp();
     }
     @AfterEach
     public void tearDown() throws Exception {
