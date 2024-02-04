@@ -1,30 +1,23 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Workshop<T extends Car> {
-
-    private ArrayList<T> carsInWorkshop;
-    private int maxCapacity;
+    private CarsInOut<T> carListTool;
 
     public Workshop(int maxCapacity) {
-        this.carsInWorkshop = new ArrayList<T>(maxCapacity);
-        this.maxCapacity = maxCapacity;
+        carListTool = new CarsInOut<T>(maxCapacity);
     }
 
     public void acceptCar(T car) {
-        if (carsInWorkshop.size() < maxCapacity) {
-            carsInWorkshop.add(car);
-        }
-        else {throw new IllegalArgumentException("Workshop is full");
-
-        }
+        carListTool.loadCar(car);
     }
 
     public T releaseCar() {
         return carListTool.unloadCar();
     }
 
-    public ArrayList<T> getCarsInWorkshop() {
-        return carsInWorkshop;
+    public Stack<T> getCarsInWorkshop() {
+        return carListTool.getCarList();
     }
 }

@@ -8,9 +8,12 @@ public class Scania extends Truck {
         super(2, Color.red, 300, "Scania");
         this.flatbedAngle = 0;
     }
-
+    @Override
+    public boolean checkFlatbed() {
+        return flatbedAngle == 0.0;
+    }
     public void changeFlatbedAngle(int amount) {
-        if (this.getCurrentSpeed() == 0 && amount <= 70 && amount >= 0) {
+        if (checkSpeedIsZero() && amount <= 70 && amount >= 0) {
             flatbedAngle = amount;
         }
         else {throw new IllegalArgumentException("The angle has to be >=0 and <=70 degrees and speed = 0");
@@ -19,7 +22,7 @@ public class Scania extends Truck {
 
     @Override
     public void gas(double amount){
-        if (this.flatbedAngle == 0) {
+        if (checkFlatbed()) {
             super.gas(amount);
         }
         else {throw new IllegalArgumentException("Flatbed needs to be flat");
@@ -28,9 +31,8 @@ public class Scania extends Truck {
 
     @Override
     public void startEngine(){
-        if (this.flatbedAngle == 0) {
+        if (checkFlatbed()) {
             super.startEngine();
-
         }
         else {
             throw new IllegalArgumentException("Flatbed needs to be flat");

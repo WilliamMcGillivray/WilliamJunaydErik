@@ -19,5 +19,8 @@ abstract class Car extends Vehicle {
         return this.width;
     }
 
+    public boolean checkCarSpeedIsZero(){
+        return getCurrentSpeed() == 0.0;
+    }
 
 }

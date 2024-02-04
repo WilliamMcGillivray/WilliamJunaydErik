@@ -55,18 +55,18 @@ class WorkshopTest {
         theGarage.acceptCar(DocHudson51);
         theGarage.releaseCar();
         assertFalse(theGarage.getCarsInWorkshop().contains(DocHudson51));
-        assertThrows(IllegalArgumentException.class, () -> theGarage.releaseCar(DocHudson51));
+        assertThrows(IllegalArgumentException.class, () -> theGarage.releaseCar());
 
 
         guidoGarage.acceptCar(StripWeathers43);
-        guidoGarage.releaseCar(StripWeathers43);
+        guidoGarage.releaseCar();
         assertFalse(guidoGarage.getCarsInWorkshop().contains(StripWeathers43));
-        assertThrows(IllegalArgumentException.class, () -> guidoGarage.releaseCar(StripWeathers43));
+        assertThrows(IllegalArgumentException.class, () -> guidoGarage.releaseCar());
 
         luigiGarage.acceptCar(ChickHicks86);
-        luigiGarage.releaseCar(ChickHicks86);
+        luigiGarage.releaseCar();
         assertFalse(luigiGarage.getCarsInWorkshop().contains(ChickHicks86));
-        assertThrows(IllegalArgumentException.class, () -> luigiGarage.releaseCar(ChickHicks86));
+        assertThrows(IllegalArgumentException.class, () -> luigiGarage.releaseCar());
 
         //guidoGarage.releaseCar(); //(Vet statiskt att bara Volvo240 kan acceptaras)
         //luigiGarage.releaseCar(); //(Vet statiskt att bara Saab95 kan acceptaras)
