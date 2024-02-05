@@ -21,26 +21,6 @@ public class Scania extends Truck {
     }
 
     @Override
-    public void gas(double amount){
-        if (checkFlatbed()) {
-            super.gas(amount);
-        }
-        else {throw new IllegalArgumentException("Flatbed needs to be flat");
-        }
-    }
-
-    @Override
-    public void startEngine(){
-        if (checkFlatbed()) {
-            super.startEngine();
-        }
-        else {
-            throw new IllegalArgumentException("Flatbed needs to be flat");
-        }
-    }
-
-
-    @Override
     protected double speedFactor() {
         return 0.5;
     }

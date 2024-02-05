@@ -12,5 +12,23 @@ abstract class Truck extends Vehicle implements TruckInterface {
     public boolean checkSpeedIsZero() {
         return getCurrentSpeed() == 0;
     }
+
+    @Override
+    public void gas(double amount){
+        if (checkFlatbed()) {
+            super.gas(amount);
+        }
+        else {throw new IllegalArgumentException("Flatbed needs to be flat");
+        }
+    }
+
+    @Override
+    public void startEngine(){
+        if (checkFlatbed()) {
+            super.startEngine();
+        }
+        else {throw new IllegalArgumentException("Flatbed needs to be flat");
+        }
+    }
 }
 

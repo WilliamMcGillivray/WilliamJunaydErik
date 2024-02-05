@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CarTransportTest {
 
-    CarTransport carTransport;
+    CarTransport<Car> carTransport;
+    CarTransport<Saab95> secondCarTransport;
 
     @BeforeEach
     void setUp() {
-        carTransport = new CarTransport();
+        carTransport = new CarTransport<Car>();
         carTransport.lowerRamp();
         Saab95 ChickHicks86 = new Saab95();
         Volvo240 McQueen95  = new Volvo240();
@@ -60,5 +61,11 @@ class CarTransportTest {
         carTransport.unloadCar();
         Car second = carTransport.getCarList().peek();
         assertNotEquals(first, second);
+    }
+
+    @Test
+    void gas() {
+        carTransport.raiseRamp();
+        carTransport.gas(1);
     }
 }

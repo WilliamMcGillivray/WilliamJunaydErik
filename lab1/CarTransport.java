@@ -1,8 +1,8 @@
 import java.awt.*;
 import java.util.Stack;
 
-public class CarTransport extends Truck {
-    private CarsInOut carListTool;
+public class CarTransport<A extends Car> extends Truck {
+    private CarsInOut<A> carListTool;
     private boolean rampUp;
     private double maxLengthCar;
     private double maxWidthCar;
@@ -46,14 +46,13 @@ public class CarTransport extends Truck {
     }
 
 
-
-    private boolean isCloseToTruck(Car car) {
+    private boolean isCloseToTruck(A car) {
 
         return car.getLocation().getY() == this.getLocation().getY() &&
                 (car.getLocation().getX() - this.getLocation().getX()) < 0.5;
     }
 
-    public void loadCar(Car car) {
+    public void loadCar(A car) {
         if (checkSpeedIsZero() && car.checkCarSpeedIsZero() && !checkFlatbed() &&
                 !getCarList().contains(car) && isCloseToTruck(car) && car.getLength() <= maxLengthCar &&
                 car.getWidth() <= maxWidthCar) {
@@ -66,9 +65,9 @@ public class CarTransport extends Truck {
         }
     }
 
-    public Car unloadCar() {
+    public A unloadCar() {
         if (!getCarList().isEmpty() && !checkFlatbed() && checkSpeedIsZero()) {
-            Car carToUnload = carListTool.unloadCar();
+            A carToUnload = carListTool.unloadCar();
             double x = this.getLocation().getX() - carToUnload.getLength() - 1;
             double y = this.getLocation().getY();
 
@@ -82,7 +81,7 @@ public class CarTransport extends Truck {
         else {throw new IllegalArgumentException("Car list is empty");}
     }
 
-    public Stack<Car> getCarList() {
+    public Stack<A> getCarList() {
         return carListTool.getCarList();
     }
 
