@@ -22,6 +22,8 @@ public class CarView extends JFrame{
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
+
+
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
@@ -105,20 +107,14 @@ public class CarView extends JFrame{
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCars()
-                ) {
-                    car.startEngine();
-                }
+                carC.startEngines();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCars()
-                ) {
-                    car.stopEngine();
-                }
+                    carC.stopEngines();
             }
         });
 
@@ -126,41 +122,30 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.gas(gasAmount);
-                System.out.println(gasAmount);
             }
         });
 
         brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCars()
-                ) {
-                    car.brake(gasAmount/100);
-                    }
+                carC.brake(gasAmount);
             }
         });
 
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCars()
-                ) {
-                    if(car instanceof Saab95) {
-                        ((Saab95) car).setTurboOn();
-                        System.out.println("Turbo is on");
-                    }}}
+                carC.turboOn();
+            }
         });
 
 
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Car car : carC.getCars()
-                ) {
-                    if(car instanceof Saab95) {
-                        ((Saab95) car).setTurboOff();
-                        System.out.println("Turbo is off");
-                    }}}});
+                carC.turboOff();
+            }
+        });
 
         liftBedButton.addActionListener(new ActionListener() {
             @Override

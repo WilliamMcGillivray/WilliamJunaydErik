@@ -24,9 +24,14 @@ abstract class Vehicle implements Movable {
 
     @Override
     public void move() {
-        double angle = Math.toRadians(this.angle);
-        double x = location.getX() + Math.cos(angle) * this.currentSpeed;
-        double y = location.getY() + Math.sin(angle) * this.currentSpeed;
+
+        double d = Math.toRadians(angle);
+        System.out.println("current speed: " + this.currentSpeed);
+        System.out.println("x-vinkeln: " + Math.cos(d));
+        System.out.println("y-vinkeln: " + Math.sin(d));
+
+        double x = location.getX() + Math.cos(d) * this.currentSpeed;
+        double y = location.getY() + Math.sin(d) * this.currentSpeed;
 
         int xInt = (int) x;
         int yInt = (int) y;
@@ -36,15 +41,15 @@ abstract class Vehicle implements Movable {
 
     @Override
     public void turnLeft() {
-        angle += Math.PI/2;
-        this.move();
+        angle += 90;
+        //this.move();
         System.out.println("Turning left");
     }
 
     @Override
     public void turnRight() {
-        angle -= Math.PI/2;
-        this.move();
+        angle -= 90;
+        //this.move();
         System.out.println("Turning right");
     }
 

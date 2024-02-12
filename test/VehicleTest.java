@@ -42,6 +42,7 @@ public class VehicleTest {
     public void testTurnRight() {
         saab95.turnRight();
         assertEquals(saab95.getAngle(), -Math.PI/2);
+        System.out.println(-Math.PI/2);
     }
 
     @Test

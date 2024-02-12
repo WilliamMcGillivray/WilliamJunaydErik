@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -10,17 +10,39 @@ import javax.swing.*;
 public class DrawPanel extends JPanel{
 
     // Just a single image, TODO: Generalize
-    BufferedImage carImage;
-    // To keep track of a single car's position
-    Point carPoint = new Point();
+    private Image saabImage;
+    private Image volvoImage;
+    private Image scaniaImage;
+
+    private Point saabPoint = new Point(0,0);
+    private Point volvoPoint = new Point(0,CarController.getYDistanceBetweenCars());
+    private Point scaniaPoint = new Point(0,2*CarController.getYDistanceBetweenCars());
+
+    private final int sizeOfArray = 3;
 
     BufferedImage volvoWorkshopImage;
-    Point volvoWorkshopPoint = new Point(300,300);
+    Point volvoWorkshopPoint = new Point(300,400);
+
+    private ArrayList<Image> images = new ArrayList<>(sizeOfArray);
+    private ArrayList<Point> points = new ArrayList<>(sizeOfArray);
+
+    public void addEveryPoint(Point... points){
+        for (Point point: points){
+            this.points.add(point);
+        }
+    }
+
+    public void addEveryImage(Image... images){
+        for (Image image: images){
+            this.images.add(image);
+        }
+    }
+    // To keep track of a single car's position
+
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        carPoint.x = x;
-        carPoint.y = y;
+    void moveit(int index, int x, int y){
+        this.points.set(index, new Point(x,y));
     }
 
     // Initializes the panel and reads the images
@@ -36,9 +58,13 @@ public class DrawPanel extends JPanel{
 
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
+            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
+            //volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
 
-            carImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            addEveryImage(scaniaImage, volvoImage, saabImage);
+            addEveryPoint(scaniaPoint, volvoPoint, saabPoint);
         } catch (IOException ex)
         {
             ex.printStackTrace();
@@ -51,7 +77,13 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(carImage, carPoint.x, carPoint.y, null); // see javadoc for more info on the parameters
-        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+//        g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
+//        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null);
+//        g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);
+        for (int i = 0; i < sizeOfArray; i++) {
+            g.drawImage(images.get(i), points.get(i).x, points.get(i).y, null);
+        }
+
+
     }
 }
