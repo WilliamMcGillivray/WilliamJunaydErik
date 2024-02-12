@@ -146,6 +146,15 @@ public class CarController {
         }
     }
 
+//    void liftBed(){
+//        for (Car car : cars) {
+//            if(car instanceof Scania) {
+//                ((Scania) car).changeFlatbedAngle(70);
+//
+//            }
+//        }
+//    }
+
 
     public static int getYDistanceBetweenCars(){
         return carDistance;
