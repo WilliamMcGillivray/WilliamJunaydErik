@@ -21,9 +21,9 @@ public class VehicleTest {
 
     @Test
     public void testMove() {
-        saab95.gas(0.5);
+        saab95.gas(1);
         saab95.move();
-        assertEquals(saab95.getLocation().getX(), (int) 0.625 );
+        assertEquals(saab95.getLocation().getX(), (int) 1 );
         assertEquals(saab95.getLocation().getY(), (int) 0.0);
     }
 

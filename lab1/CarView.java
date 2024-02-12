@@ -101,12 +101,79 @@ public class CarView extends JFrame{
 
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCars()
+                ) {
+                    car.startEngine();
+                }
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCars()
+                ) {
+                    car.stopEngine();
+                }
+            }
+        });
+
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.gas(gasAmount);
+                System.out.println(gasAmount);
             }
         });
+
+        brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCars()
+                ) {
+                    car.brake(gasAmount/100);
+                    }
+            }
+        });
+
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCars()
+                ) {
+                    if(car instanceof Saab95) {
+                        ((Saab95) car).setTurboOn();
+                        System.out.println("Turbo is on");
+                    }}}
+        });
+
+
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Car car : carC.getCars()
+                ) {
+                    if(car instanceof Saab95) {
+                        ((Saab95) car).setTurboOff();
+                        System.out.println("Turbo is off");
+                    }}}});
+
+        liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                for (Scania truck : carC.getCars()
+//                ) {
+//                    truck.startEngine();
+//                }
+            }
+        });
+
+
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

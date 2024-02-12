@@ -74,7 +74,7 @@ abstract class Vehicle implements Movable {
 
     public void startEngine(){
 
-        this.currentSpeed = 0.1;
+        this.currentSpeed = 1;
     }
 
     public void stopEngine(){
