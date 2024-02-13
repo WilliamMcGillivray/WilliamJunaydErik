@@ -34,6 +34,7 @@ public class CarController<T extends Vehicle> {
 
     // A list of vehicles
     private ArrayList<T> vehicles = new ArrayList<>();
+    private int count = 0;
 
     //methods:
 
@@ -75,6 +76,7 @@ public class CarController<T extends Vehicle> {
                 if (vehicle instanceof Volvo240) {
                     checkWorkshop((Volvo240) vehicle, x, y);}
 
+
 //                if (x > cc.volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshopPoint.getX() + 101){
 //                    if (y >= volvoWorkshopPoint.getY() && y <= volvoWorkshopPoint.getY() + 96 && (vehicle instanceof Volvo240)){
 //                        Point wallPoint = null;
@@ -103,15 +105,25 @@ public class CarController<T extends Vehicle> {
 //    }
 
     void checkWorkshop(Vehicle vehicle, int x, int y) {
-        if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101){
+        if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101 &&
+                !volvoWorkshop.getCarsInWorkshop().contains(vehicle)){
             if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){
-                volvoWorkshop.acceptCar((Volvo240) vehicle);
-                Point wallPoint = null;
+                count += 1;
+                System.out.println("count: " + count);
+                Point wallPoint;
                 wallPoint = new Point((int) volvoWorkshop.getLocation().getX(), (int) volvoWorkshop.getLocation().getY());
                 vehicle.setLocation(wallPoint);
                 vehicle.stopEngine();
                 x = (int) Math.round(vehicle.getLocation().getX());
                 y = (int) Math.round(vehicle.getLocation().getY());
+                System.out.println(volvoWorkshop.getCarsInWorkshop());
+                volvoWorkshop.acceptCar((Volvo240) vehicle);
+
+            }
+        }
+        if (x < volvoWorkshop.getLocation().getX() - vehicleWidth || x > volvoWorkshop.getLocation().getX() + 101) {
+            if (volvoWorkshop.getCarsInWorkshop().contains(vehicle)) {
+                volvoWorkshop.releaseCar();
             }
         }
     }
@@ -143,23 +155,26 @@ public class CarController<T extends Vehicle> {
     void gas(int amount) {
         double gas = ((double) amount)/100;
         for (T vehicle : vehicles
-                ) {
+                ) if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed()>0) {{
             vehicle.gas(gas);
-        }
+        }}
     }
 
     void brake(int amount) {
         double gas = ((double) amount)/100;
         for (T vehicle : vehicles
         ) {
-            vehicle.brake(gas);
+                vehicle.brake(gas);
+
         }
     }
 
     void startEngines() {
         for (T vehicle : vehicles
         ) {
-            vehicle.startEngine();
+            if (vehicle.getCurrentSpeed() < 1) {
+                vehicle.startEngine();
+            }
         }
     }
     void stopEngines() {
