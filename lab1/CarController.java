@@ -10,7 +10,7 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class CarController<T extends Vehicle> {
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
@@ -25,23 +25,29 @@ public class CarController {
     private int panelWidth = 800;
     private int panelHeight = 560;
 
-    private static int carWidth = 100;
-    private static int carHeight = 60;
-    private static int carDistance = carHeight + 100;
+    private static int vehicleWidth = 100;
+    private static int vehicleHeight = 60;
+    private static int vehicleDistance = vehicleHeight + 100;
 
+    private Workshop<Volvo240> volvoWorkshop = new Workshop<>(4);
+    private Point volvoWorkshopPoint = new Point(300,0);; //101x96
 
-    // A list of cars, modify if needed
-    private ArrayList<Car> cars = new ArrayList<>();
+    // A list of vehicles
+    private ArrayList<T> vehicles = new ArrayList<>();
 
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
-        CarController cc = new CarController();
+        CarController<Vehicle> cc = new CarController<>();
 
+        cc.vehicles.add(new Volvo240());
+        cc.vehicles.add(new Saab95());
+        cc.vehicles.add(new Scania());
+        cc.vehicles.get(1).setLocation(new Point(0, vehicleDistance));
+        cc.vehicles.get(2).setLocation(new Point(0, 2*vehicleDistance));
 
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
+        cc.volvoWorkshop.setLocation(new Point(300, 0));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -54,38 +60,35 @@ public class CarController {
     * view to update its images. Change this method to your needs.
     * */
     private class TimerListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
-                int x = (int) Math.round(car.getLocation().getX());
-                int y = (int) Math.round(car.getLocation().getY());
+            for (T vehicle : vehicles) {
+                int x = (int) Math.round(vehicle.getLocation().getX());
+                int y = (int) Math.round(vehicle.getLocation().getY());
 
-                car.move();
+                vehicle.move();
 
-                if (car.getLocation().getX() > panelWidth - carWidth || car.getLocation().getX() < 0) {
-                    Point wallPoint;
+                int[] list = checkBoundaries(vehicle, x, y);
+                x = list[0];
+                y = list[1];
 
-                    if (car.getLocation().getX() > panelWidth - carWidth) {
-                        wallPoint = new Point(panelWidth - carWidth, 0);
-                    }
-                    else {
-                        wallPoint = new Point(0, 0);
-                    }
+                if (vehicle instanceof Volvo240) {
+                    checkWorkshop((Volvo240) vehicle, x, y);}
 
-                    car.setLocation(wallPoint);
-                    car.stopEngine();
+//                if (x > cc.volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshopPoint.getX() + 101){
+//                    if (y >= volvoWorkshopPoint.getY() && y <= volvoWorkshopPoint.getY() + 96 && (vehicle instanceof Volvo240)){
+//                        Point wallPoint = null;
+//                        wallPoint = new Point((int) volvoWorkshopPoint.getX(), (int) volvoWorkshopPoint.getY());
+//                        vehicle.setLocation(wallPoint);
+//                        vehicle.stopEngine();
+//                        x = (int) Math.round(vehicle.getLocation().getX());
+//                        y = (int) Math.round(vehicle.getLocation().getY());
+//                    }
+//                }
 
-                    car.turnRight();
-                    car.turnRight();
-                    car.startEngine();
-                    x = (int) Math.round(car.getLocation().getX());
-                    y = (int) Math.round(car.getLocation().getY());
-
-                }
-
+                frame.drawPanel.moveit(vehicles.indexOf(vehicle), x, y);
+                System.out.println(x);
                 System.out.println(y);
-                System.out.println("Angle: " + car.getAngle());
-
-                frame.drawPanel.moveit(cars.indexOf(car), x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
@@ -98,69 +101,117 @@ public class CarController {
 //        //boolean isTooFarUp = car.getLocation().getY() < 0;
 //        //boolean isTooFarDown = car.getLocation().getY() < panelHeight - carHeight;
 //    }
+
+    void checkWorkshop(Vehicle vehicle, int x, int y) {
+        if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101){
+            if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){
+                volvoWorkshop.acceptCar((Volvo240) vehicle);
+                Point wallPoint = null;
+                wallPoint = new Point((int) volvoWorkshop.getLocation().getX(), (int) volvoWorkshop.getLocation().getY());
+                vehicle.setLocation(wallPoint);
+                vehicle.stopEngine();
+                x = (int) Math.round(vehicle.getLocation().getX());
+                y = (int) Math.round(vehicle.getLocation().getY());
+            }
+        }
+    }
+
+    int[] checkBoundaries(Vehicle vehicle, int x, int y) {
+        if (x > panelWidth - vehicleWidth || x < 0) {
+            Point wallPoint;
+
+            if (x > panelWidth - vehicleWidth) {
+                wallPoint = new Point(panelWidth - vehicleWidth, y);
+            }
+            else {
+                wallPoint = new Point(0, y);
+            }
+
+            vehicle.setLocation(wallPoint);
+            vehicle.stopEngine();
+
+            vehicle.turnRight();
+            vehicle.turnRight();
+            vehicle.startEngine();
+            x = (int) Math.round(vehicle.getLocation().getX());
+            y = (int) Math.round(vehicle.getLocation().getY());
+        }
+        return new int[] {x, y};
+    }
+
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount)/100;
-        for (Car car : cars
+        for (T vehicle : vehicles
                 ) {
-            car.gas(gas);
+            vehicle.gas(gas);
         }
     }
 
     void brake(int amount) {
         double gas = ((double) amount)/100;
-        for (Car car : cars
+        for (T vehicle : vehicles
         ) {
-            car.brake(gas);
+            vehicle.brake(gas);
         }
     }
 
     void startEngines() {
-        for (Car car : cars
+        for (T vehicle : vehicles
         ) {
-            car.startEngine();
+            vehicle.startEngine();
         }
     }
     void stopEngines() {
-        for (Car car : cars
+        for (T vehicle : vehicles
         ) {
-            car.stopEngine();
+            vehicle.stopEngine();
         }
     }
 
     void turboOn() {
-        for (Car car : cars) {
-            if(car instanceof Saab95) {
-                ((Saab95) car).setTurboOn();
+        for (T vehicle : vehicles) {
+            if(vehicle instanceof Saab95) {
+                ((Saab95) vehicle).setTurboOn();
                 System.out.println("Turbo is on");
             }
         }
     }
 
     void turboOff() {
-        for (Car car : cars) {
-            if(car instanceof Saab95) {
-                ((Saab95) car).setTurboOff();
+        for (T vehicle : vehicles) {
+            if(vehicle instanceof Saab95) {
+                ((Saab95) vehicle).setTurboOff();
                 System.out.println("Turbo is off");
             }
         }
     }
 
-//    void liftBed(){
-//        for (Car car : cars) {
-//            if(car instanceof Scania) {
-//                ((Scania) car).changeFlatbedAngle(70);
-//
-//            }
-//        }
-//    }
+    void liftBed(){
+        for (T vehicle : vehicles) {
+            if(vehicle instanceof Scania) {
+                ((Scania) vehicle).changeFlatbedAngle(70);
 
-
-    public static int getYDistanceBetweenCars(){
-        return carDistance;
+            }
+        }
     }
 
-    public ArrayList<Car> getCars() {
-        return cars;
+    void lowerBed(){
+        for (T vehicle : vehicles) {
+            if(vehicle instanceof Scania) {
+                ((Scania) vehicle).changeFlatbedAngle(0);
+
+            }
+        }
+    }
+
+
+    public static int getYDistanceBetweenVehicles(){
+        return vehicleDistance;
     }
 }
+
+//    public ArrayList<T> getVehicles() {
+//        return vehicles;
+//    }
+//}
