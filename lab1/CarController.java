@@ -46,7 +46,7 @@ public class CarController<T extends Vehicle> {
         cc.vehicles.add(new Saab95());
         cc.vehicles.add(new Scania());
         cc.vehicles.get(1).setLocation(new Point(0, vehicleDistance));
-        cc.vehicles.get(2).setLocation(new Point(0, 2*vehicleDistance));
+        cc.vehicles.get(2).setLocation(new Point(0, 0));
 
         cc.volvoWorkshop.setLocation(new Point(300, 0));
 
@@ -76,21 +76,8 @@ public class CarController<T extends Vehicle> {
                 if (vehicle instanceof Volvo240) {
                     checkWorkshop((Volvo240) vehicle, x, y);}
 
-
-//                if (x > cc.volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshopPoint.getX() + 101){
-//                    if (y >= volvoWorkshopPoint.getY() && y <= volvoWorkshopPoint.getY() + 96 && (vehicle instanceof Volvo240)){
-//                        Point wallPoint = null;
-//                        wallPoint = new Point((int) volvoWorkshopPoint.getX(), (int) volvoWorkshopPoint.getY());
-//                        vehicle.setLocation(wallPoint);
-//                        vehicle.stopEngine();
-//                        x = (int) Math.round(vehicle.getLocation().getX());
-//                        y = (int) Math.round(vehicle.getLocation().getY());
-//                    }
-//                }
-
                 frame.drawPanel.moveit(vehicles.indexOf(vehicle), x, y);
-                System.out.println(x);
-                System.out.println(y);
+
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }

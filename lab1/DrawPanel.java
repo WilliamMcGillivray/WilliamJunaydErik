@@ -37,7 +37,7 @@ public class DrawPanel extends JPanel{
             this.images.add(image);
         }
     }
-    // To keep track of a single car's position
+
 
 
     // TODO: Make this general for all cars
