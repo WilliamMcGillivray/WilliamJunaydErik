@@ -45,9 +45,11 @@ public class CarController<T extends Vehicle> {
 
     //methods:
 
+
     public static void main(String[] args) {
         // Instance of this class
-        CarController<Vehicle> cc = new CarController<>();
+        CarController<Vehicle> cc = new CarController();
+
 
         cc.vehicles.add(new Volvo240());
         cc.vehicles.add(new Saab95());
@@ -58,11 +60,113 @@ public class CarController<T extends Vehicle> {
         cc.volvoWorkshop.setLocation(new Point(300, 0));
 
         // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+
 
         // Start the timer
         cc.timer.start();
     }
+
+    public CarController() {
+
+        frame = new CarView("CarSim 1.0");
+        frame.startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    if (vehicle.getCurrentSpeed() < 1) {
+                        vehicle.startEngine();
+                    }
+                }
+            }
+        });
+
+        frame.stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    vehicle.stopEngine();
+                }
+            }
+        });
+
+        frame.gasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double gas = ((double) frame.gasAmount) / 100;
+                for (T vehicle : vehicles
+                )
+                    if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed() > 0) {
+                        {
+                            vehicle.gas(gas);
+                        }
+                    }
+            }
+        });
+
+        frame.brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double gas = ((double) frame.gasAmount) / 100;
+                for (T vehicle : vehicles
+                ) {
+                    vehicle.brake(gas);
+
+                }
+            }
+        });
+
+        frame.turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    if (vehicle instanceof Saab95) {
+                        ((Saab95) vehicle).setTurboOn();
+                        System.out.println("Turbo is on");
+                    }
+                }
+            }
+        });
+
+
+        frame.turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    if (vehicle instanceof Saab95) {
+                        ((Saab95) vehicle).setTurboOff();
+                        System.out.println("Turbo is off");
+                    }
+                }
+            }
+        });
+
+        frame.liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    if (vehicle instanceof Scania) {
+                        ((Scania) vehicle).changeFlatbedAngle(70);
+
+                    }
+                }
+
+            }
+        });
+
+        frame.lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (T vehicle : vehicles) {
+                    if (vehicle instanceof Scania) {
+                        ((Scania) vehicle).changeFlatbedAngle(0);
+
+                    }
+                }
+            }
+
+        });
+    }
+
 
     /* Each step the TimerListener moves all the cars in the list and tells the
     * view to update its images. Change this method to your needs.
@@ -146,73 +250,73 @@ public class CarController<T extends Vehicle> {
     }
 
     // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount)/100;
-        for (T vehicle : vehicles
-                ) if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed()>0) {{
-            vehicle.gas(gas);
-        }}
-    }
-
-    void brake(int amount) {
-        double gas = ((double) amount)/100;
-        for (T vehicle : vehicles
-        ) {
-                vehicle.brake(gas);
-
-        }
-    }
-
-    void startEngines() {
-        for (T vehicle : vehicles
-        ) {
-            if (vehicle.getCurrentSpeed() < 1) {
-                vehicle.startEngine();
-            }
-        }
-    }
-    void stopEngines() {
-        for (T vehicle : vehicles
-        ) {
-            vehicle.stopEngine();
-        }
-    }
-
-    void turboOn() {
-        for (T vehicle : vehicles) {
-            if(vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOn();
-                System.out.println("Turbo is on");
-            }
-        }
-    }
-
-    void turboOff() {
-        for (T vehicle : vehicles) {
-            if(vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOff();
-                System.out.println("Turbo is off");
-            }
-        }
-    }
-
-    void liftBed(){
-        for (T vehicle : vehicles) {
-            if(vehicle instanceof Scania) {
-                ((Scania) vehicle).changeFlatbedAngle(70);
-
-            }
-        }
-    }
-
-    void lowerBed(){
-        for (T vehicle : vehicles) {
-            if(vehicle instanceof Scania) {
-                ((Scania) vehicle).changeFlatbedAngle(0);
-
-            }
-        }
-    }
+//    void gas(int amount) {
+//        double gas = ((double) amount)/100;
+//        for (T vehicle : vehicles
+//                ) if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed()>0) {{
+//            vehicle.gas(gas);
+//        }}
+//    }
+//
+//    void brake(int amount) {
+//        double gas = ((double) amount)/100;
+//        for (T vehicle : vehicles
+//        ) {
+//                vehicle.brake(gas);
+//
+//        }
+//    }
+//
+//    void startEngines() {
+//        for (T vehicle : vehicles
+//        ) {
+//            if (vehicle.getCurrentSpeed() < 1) {
+//                vehicle.startEngine();
+//            }
+//        }
+//    }
+//    void stopEngines() {
+//        for (T vehicle : vehicles
+//        ) {
+//            vehicle.stopEngine();
+//        }
+//    }
+//
+//    void turboOn() {
+//        for (T vehicle : vehicles) {
+//            if(vehicle instanceof Saab95) {
+//                ((Saab95) vehicle).setTurboOn();
+//                System.out.println("Turbo is on");
+//            }
+//        }
+//    }
+//
+//    void turboOff() {
+//        for (T vehicle : vehicles) {
+//            if(vehicle instanceof Saab95) {
+//                ((Saab95) vehicle).setTurboOff();
+//                System.out.println("Turbo is off");
+//            }
+//        }
+//    }
+//
+//    void liftBed(){
+//        for (T vehicle : vehicles) {
+//            if(vehicle instanceof Scania) {
+//                ((Scania) vehicle).changeFlatbedAngle(70);
+//
+//            }
+//        }
+//    }
+//
+//    void lowerBed(){
+//        for (T vehicle : vehicles) {
+//            if(vehicle instanceof Scania) {
+//                ((Scania) vehicle).changeFlatbedAngle(0);
+//
+//            }
+//        }
+//    }
 
     public static int getYDistanceBetweenVehicles(){
         return vehicleDistance;
