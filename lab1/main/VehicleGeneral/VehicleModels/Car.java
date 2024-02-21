@@ -1,6 +1,8 @@
+package main.VehicleGeneral.VehicleModels;
+
 import java.awt.*;
 
-abstract class Car extends Vehicle {
+abstract public class Car extends Vehicle {
 
     final private double length;
     final private double width;

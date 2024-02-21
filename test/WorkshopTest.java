@@ -1,3 +1,7 @@
+import main.VehicleGeneral.VehicleModels.Car;
+import main.VehicleGeneral.VehicleModels.Saab95;
+import main.VehicleGeneral.VehicleModels.Volvo240;
+import main.Workshop;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,8 +47,8 @@ class WorkshopTest {
         luigiGarage.acceptCar(ChickHicks86);
         assertTrue(luigiGarage.getCarsInWorkshop().contains(ChickHicks86));
 
-        //guidoGarage.acceptCar(); //(Vet statiskt att bara Volvo240 kan acceptaras)
-        //luigiGarage.acceptCar(); //(Vet statiskt att bara Saab95 kan acceptaras)
+        //guidoGarage.acceptCar(); //(Vet statiskt att bara main.VehicleGeneral.VehicleModels.Volvo240 kan acceptaras)
+        //luigiGarage.acceptCar(); //(Vet statiskt att bara main.VehicleGeneral.VehicleModels.Saab95 kan acceptaras)
         //luigiGarage.acceptCar(McQueen95); //(Blir statiskt (compile time) fel då fel sorts bil lämnas in)
         //guidoGarage.acceptCar(ChickHicks86); //(Blir statiskt (compile time) fel då fel sorts bil lämnas in)
 
@@ -68,8 +72,8 @@ class WorkshopTest {
         assertFalse(luigiGarage.getCarsInWorkshop().contains(ChickHicks86));
         assertThrows(IllegalArgumentException.class, () -> luigiGarage.releaseCar());
 
-        //guidoGarage.releaseCar(); //(Vet statiskt att bara Volvo240 kan acceptaras)
-        //luigiGarage.releaseCar(); //(Vet statiskt att bara Saab95 kan acceptaras)
+        //guidoGarage.releaseCar(); //(Vet statiskt att bara main.VehicleGeneral.VehicleModels.Volvo240 kan acceptaras)
+        //luigiGarage.releaseCar(); //(Vet statiskt att bara main.VehicleGeneral.VehicleModels.Saab95 kan acceptaras)
 
 
     }

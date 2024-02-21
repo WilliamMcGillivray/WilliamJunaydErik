@@ -1,3 +1,5 @@
+import main.VehicleGeneral.VehicleModels.Saab95;
+import main.VehicleGeneral.VehicleModels.Volvo240;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +67,7 @@ public class VehicleTest {
 
     @Test
     public void testGetModelName() {
-        assertEquals(saab95.getModelName(), "Saab95");
+        assertEquals(saab95.getModelName(), "main.VehicleGeneral.VehicleModels.Saab95");
     }
 
     @Test

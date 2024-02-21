@@ -1,3 +1,5 @@
+package main.VehicleGeneral.VehicleModels;
+
 import java.awt.*;
 
 public class Scania extends Truck {
@@ -5,7 +7,7 @@ public class Scania extends Truck {
     private double flatbedAngle;
 
     public Scania() {
-        super(2, Color.red, 300, "Scania");
+        super(2, Color.red, 300, "main.VehicleGeneral.VehicleModels.Scania");
         this.flatbedAngle = 0;
     }
     @Override
@@ -21,7 +23,7 @@ public class Scania extends Truck {
     }
 
     @Override
-    protected double speedFactor() {
+    public double speedFactor() {
         return 0.5;
     }
 

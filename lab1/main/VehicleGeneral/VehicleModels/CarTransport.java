@@ -1,3 +1,7 @@
+package main.VehicleGeneral.VehicleModels;
+
+import main.VehicleGeneral.CarsInOut;
+
 import java.awt.*;
 import java.util.Stack;
 
@@ -21,7 +25,7 @@ public class CarTransport<A extends Car> extends Truck {
     }
 
     @Override
-    protected double speedFactor() {
+    public double speedFactor() {
         return 0.5;
     }
 
@@ -78,7 +82,7 @@ public class CarTransport<A extends Car> extends Truck {
             carToUnload.setLocation(p);
             return carToUnload;
         }
-        else {throw new IllegalArgumentException("Car list is empty");}
+        else {throw new IllegalArgumentException("main.VehicleGeneral.VehicleModels.Car list is empty");}
     }
 
     public Stack<A> getCarList() {

@@ -1,3 +1,10 @@
+package main;
+
+import main.VehicleGeneral.VehicleModels.Saab95;
+import main.VehicleGeneral.VehicleModels.Scania;
+import main.VehicleGeneral.VehicleModels.Vehicle;
+import main.VehicleGeneral.VehicleModels.Volvo240;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -83,7 +90,7 @@ public class CarController<T extends Vehicle> {
             }
         }
     }
-//    private boolean DroveIntoWall(Car car){
+//    private boolean DroveIntoWall(main.VehicleGeneral.Car car){
 //        boolean isTooFarRight = car.getLocation().getX() > panelWidth - carWidth;
 //        boolean isTooFarLeft = car.getLocation().getX() < 0;
 //
@@ -207,13 +214,11 @@ public class CarController<T extends Vehicle> {
         }
     }
 
-
     public static int getYDistanceBetweenVehicles(){
         return vehicleDistance;
     }
-}
 
-//    public ArrayList<T> getVehicles() {
-//        return vehicles;
-//    }
-//}
+    public ArrayList<T> getVehicles() {
+        return vehicles;
+    }
+}

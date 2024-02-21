@@ -1,3 +1,7 @@
+package main.VehicleGeneral.VehicleModels;
+
+import main.VehicleGeneral.TruckInterface;
+
 import java.awt.*;
 
 abstract class Truck extends Vehicle implements TruckInterface {

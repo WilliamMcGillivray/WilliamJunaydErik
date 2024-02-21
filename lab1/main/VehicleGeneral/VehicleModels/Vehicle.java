@@ -1,9 +1,12 @@
+package main.VehicleGeneral.VehicleModels;
+import main.Movable;
+
 import java.awt.*;
 
 //WASSUUUUPPPP
 //tjjjjjenare
 
-abstract class Vehicle implements Movable {
+abstract public class Vehicle implements Movable {
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
@@ -124,7 +127,7 @@ abstract class Vehicle implements Movable {
         return location;
     }
 
-    protected Point setLocation(Point newLocation) {
+    public Point setLocation(Point newLocation) {
         location.setLocation(newLocation);
         return location;
     }

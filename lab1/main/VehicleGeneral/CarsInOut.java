@@ -1,3 +1,7 @@
+package main.VehicleGeneral;
+
+import main.VehicleGeneral.VehicleModels.Car;
+
 import java.util.Stack;
 
 public class CarsInOut<T extends Car> {
@@ -14,7 +18,7 @@ public class CarsInOut<T extends Car> {
         if (carList.size() < maxCapacity) {
             carList.add(car);
         }
-        else {throw new IllegalArgumentException("Car list is full");}
+        else {throw new IllegalArgumentException("main.VehicleGeneral.VehicleModels.Car list is full");}
     }
 
     public T unloadCar() {
@@ -22,7 +26,7 @@ public class CarsInOut<T extends Car> {
             T carToUnload = carList.pop();
             return carToUnload;
         }
-        else {throw new IllegalArgumentException("Car list is empty");}
+        else {throw new IllegalArgumentException("main.VehicleGeneral.VehicleModels.Car list is empty");}
     }
 
     public Stack<T> getCarList() {
