@@ -325,4 +325,8 @@ public class CarController<T extends Vehicle> {
     public ArrayList<T> getVehicles() {
         return vehicles;
     }
+
+    public void addVehicleToArr(T vehicle){
+        vehicles.add(vehicle);
+    }
 }
