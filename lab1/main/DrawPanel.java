@@ -12,6 +12,8 @@ import javax.swing.*;
 
 public class DrawPanel extends JPanel{
 
+
+
     // Just a single image, TODO: Generalize
     private Image saabImage;
     private Image volvoImage;
@@ -23,25 +25,19 @@ public class DrawPanel extends JPanel{
     private Point scaniaPoint = new Point(0,320);
     private Point volvoWorkshopPoint = new Point(300,0);
 
-    private final int sizeOfArray = 4;
+    private final int sizeOfArray = 10;
 
 
     private ArrayList<Image> images = new ArrayList<>(sizeOfArray);
     private ArrayList<Point> points = new ArrayList<>(sizeOfArray);
 
-    public void addEveryPoint(Point... points){
-        for (Point point: points){
-            this.points.add(point);
-        }
+    public void addPoint(Point point){
+        this.points.add(point);
     }
 
-    public void addEveryImage(Image... images){
-        for (Image image: images){
-            this.images.add(image);
-        }
+    public void addImage(Image image){
+        this.images.add(image);
     }
-
-
 
     // TODO: Make this general for all cars
     void moveit(int index, int x, int y){
@@ -68,13 +64,12 @@ public class DrawPanel extends JPanel{
             scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../pics/Scania.jpg"));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../pics/VolvoBrand.jpg"));
 
-            addEveryImage(volvoImage, saabImage, scaniaImage, volvoWorkshopImage);
-            addEveryPoint(volvoPoint, saabPoint, scaniaPoint, volvoWorkshopPoint);
+            //addEveryImage(volvoImage, saabImage, scaniaImage, volvoWorkshopImage);
+            //addEveryPoint(volvoPoint, saabPoint, scaniaPoint, volvoWorkshopPoint);
         } catch (IOException ex)
         {
             ex.printStackTrace();
         }
-
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -82,13 +77,24 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        g.drawImage(saabImage, saabPoint.x, saabPoint.y, null);
-//        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null);
-//        g.drawImage(scaniaImage, scaniaPoint.x, scaniaPoint.y, null);
-        for (int i = 0; i < sizeOfArray; i++) {
-            g.drawImage(images.get(i), points.get(i).x, points.get(i).y, null);
-        }
+        System.out.println("brrrrrrroooooorrr");
 
+//        if (points.size() > 0){
+//            for (int i = 0; i < sizeOfArray; i++) {
+//                g.drawImage(images.get(i), points.get(i).x, points.get(i).y, null);
+//            }
+//        }
+    }
 
+    public Image getSaabImage() {
+        return saabImage;
+    }
+
+    public Image getVolvoImage() {
+        return volvoImage;
+    }
+
+    public Image getScaniaImage() {
+        return scaniaImage;
     }
 }

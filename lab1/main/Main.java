@@ -11,11 +11,13 @@ public class Main {
 
     public static void main(String[] args) {
         VehicleGenerator vehicleGenerator = new VehicleGenerator();
-        
+
         CarController cc = new CarController();
 
+        cc.addVehicleToArr(vehicleGenerator.addSaab(0,0));
 
-        cc.addVehicleToArr(vehicleGenerator.generateSaab(0,0));
+        cc.getTimer().start();
+
 
 
 

@@ -1,5 +1,10 @@
 package main;
 
+import main.VehicleGeneral.VehicleModels.Saab95;
+import main.VehicleGeneral.VehicleModels.Scania;
+import main.VehicleGeneral.VehicleModels.Vehicle;
+import main.VehicleGeneral.VehicleModels.Volvo240;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,6 +32,7 @@ public class CarView extends JFrame{
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+    JButton addVehicleButton = new JButton("Add Vehicle");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -82,6 +88,7 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addVehicleButton, 6);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -115,5 +122,16 @@ public class CarView extends JFrame{
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void viewVehicle(Vehicle vehicle){
+        if (vehicle instanceof Volvo240) {
+            drawPanel.addImage(drawPanel.getVolvoImage());
+        } else if (vehicle instanceof Saab95) {
+            drawPanel.addImage(drawPanel.getSaabImage());
+        } else if (vehicle instanceof Scania) {
+            drawPanel.addImage(drawPanel.getScaniaImage());
+        }
+        drawPanel.addPoint(vehicle.getLocation());
     }
 }

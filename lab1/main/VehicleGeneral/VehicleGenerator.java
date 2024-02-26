@@ -1,32 +1,36 @@
 package main.VehicleGeneral;
 import main.VehicleGeneral.VehicleModels.*;
+import java.util.Random;
 
 import java.awt.*;
 
 public class VehicleGenerator {
 
-    public Volvo240 generateVolvo(int x, int y){
+    private static final Random random = new Random();
+
+    public static Volvo240 addVolvo(int x, int y){
         Volvo240 volvo240 = new Volvo240();
         volvo240.setLocation(new Point(x, y));
+
         return volvo240;
     }
 
-    public Saab95 generateSaab(int x, int y){
+    public static Saab95 addSaab(int x, int y){
         Saab95 saab95 = new Saab95();
         saab95.setLocation(new Point(x, y));
         return saab95;
     }
 
-    public Scania generateScania(int x, int y){
+    public static Scania addScania(int x, int y){
         Scania scania = new Scania();
         scania.setLocation(new Point(x, y));
         return scania;
     }
 
-    public CarTransport generateCarTransport(int x, int y){
-        CarTransport carTransport = new CarTransport();
-        carTransport.setLocation(new Point(x,y));
-        return carTransport;
+    public static Vehicle addRandomVehicle(int x, int y){
+        Vehicle[] vehicleTypeList = {new Volvo240(), new Saab95(), new Scania()};
+        Vehicle selectedVehicle = vehicleTypeList[random.nextInt(vehicleTypeList.length)];
+        selectedVehicle.setLocation(new Point(x, y));
+        return selectedVehicle;
     }
-
 }

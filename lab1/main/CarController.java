@@ -1,5 +1,6 @@
 package main;
 
+import main.VehicleGeneral.VehicleGenerator;
 import main.VehicleGeneral.VehicleModels.Saab95;
 import main.VehicleGeneral.VehicleModels.Scania;
 import main.VehicleGeneral.VehicleModels.Vehicle;
@@ -22,6 +23,9 @@ public class CarController<T extends Vehicle> {
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
+
+
+
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
@@ -51,22 +55,23 @@ public class CarController<T extends Vehicle> {
         CarController<Vehicle> cc = new CarController();
 
 
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.add(new Saab95());
-        cc.vehicles.add(new Scania());
-        cc.vehicles.get(1).setLocation(new Point(0, vehicleDistance));
-        cc.vehicles.get(2).setLocation(new Point(0, 0));
+        cc.addVehicleToArr(VehicleGenerator.addVolvo(0, 0));
+        cc.addVehicleToArr(VehicleGenerator.addSaab(0, getYDistanceBetweenVehicles()));
+        cc.addVehicleToArr(VehicleGenerator.addScania(0, 2*getYDistanceBetweenVehicles()));
+
 
         cc.volvoWorkshop.setLocation(new Point(300, 0));
+        cc.timer.start();
 
         // Start a new view and send a reference of self
 
 
         // Start the timer
-        cc.timer.start();
+
     }
 
     public CarController() {
+
 
         frame = new CarView("CarSim 1.0");
         frame.startButton.addActionListener(new ActionListener() {
@@ -165,6 +170,31 @@ public class CarController<T extends Vehicle> {
             }
 
         });
+
+        frame.addVehicleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = {"Add Random Car", "Add Volvo240","Add Saab95","Add Scania"};
+                int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Add Car",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                double closestYPos = vehicles.getLast().getLocation().getY();
+                Vehicle newVehicle;
+
+                if (choice == 0) {
+                    newVehicle = VehicleGenerator.addRandomVehicle(0, (int) closestYPos + vehicleDistance);
+                }
+                else if (choice == 1) {
+                    newVehicle = VehicleGenerator.addVolvo(0, (int) closestYPos + vehicleDistance);
+                }
+                else if (choice == 2) {
+                    newVehicle = VehicleGenerator.addSaab(0, (int) closestYPos + vehicleDistance);
+                }
+                else {
+                    newVehicle = VehicleGenerator.addScania(0, (int) closestYPos + vehicleDistance);
+                }
+                vehicles.add((T) newVehicle);
+            }
+        });
     }
 
 
@@ -192,6 +222,7 @@ public class CarController<T extends Vehicle> {
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
+
         }
     }
 //    private boolean DroveIntoWall(main.VehicleGeneral.Car car){
@@ -328,5 +359,10 @@ public class CarController<T extends Vehicle> {
 
     public void addVehicleToArr(T vehicle){
         vehicles.add(vehicle);
+        frame.viewVehicle(vehicle);
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }
