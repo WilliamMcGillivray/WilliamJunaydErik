@@ -33,6 +33,7 @@ public class CarView extends JFrame{
     int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
     JButton addVehicleButton = new JButton("Add Vehicle");
+    JButton removeVehicleButton = new JButton("Remove Vehicle");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -89,6 +90,7 @@ public class CarView extends JFrame{
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(addVehicleButton, 6);
+        controlPanel.add(removeVehicleButton,7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);

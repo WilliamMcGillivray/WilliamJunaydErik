@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /*
@@ -38,13 +39,15 @@ public class CarController<T extends Vehicle> {
 
     private static int vehicleWidth = 100;
     private static int vehicleHeight = 60;
-    private static int vehicleDistance = vehicleHeight + 100;
+    private static int vehicleDistance = vehicleHeight;
 
     private Workshop<Volvo240> volvoWorkshop = new Workshop<>(4);
     private Point volvoWorkshopPoint = new Point(300,0);; //101x96
 
     // A list of vehicles
     private ArrayList<T> vehicles = new ArrayList<>();
+    private int maxNrVehicles = 5;
+
     private int count = 0;
 
     //methods:
@@ -61,6 +64,7 @@ public class CarController<T extends Vehicle> {
 
 
         cc.volvoWorkshop.setLocation(new Point(300, 0));
+        cc.frame.drawPanel.addWorkshopPoint(cc.volvoWorkshop.getLocation());
         cc.timer.start();
 
         // Start a new view and send a reference of self
@@ -68,10 +72,11 @@ public class CarController<T extends Vehicle> {
 
         // Start the timer
 
+
     }
 
     public CarController() {
-
+        volvoWorkshop.setLocation(new Point(300, 0));
 
         frame = new CarView("CarSim 1.0");
         frame.startButton.addActionListener(new ActionListener() {
@@ -177,7 +182,15 @@ public class CarController<T extends Vehicle> {
                 Object[] options = {"Add Random Car", "Add Volvo240","Add Saab95","Add Scania"};
                 int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Add Car",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-                double closestYPos = vehicles.getLast().getLocation().getY();
+
+                double closestYPos;
+
+                if (vehicles.size() > 0) {
+                    closestYPos = vehicles.getLast().getLocation().getY();
+                } else {
+                    closestYPos = -vehicleDistance;
+                }
+
                 Vehicle newVehicle;
 
                 if (choice == 0) {
@@ -192,9 +205,19 @@ public class CarController<T extends Vehicle> {
                 else {
                     newVehicle = VehicleGenerator.addScania(0, (int) closestYPos + vehicleDistance);
                 }
-                vehicles.add((T) newVehicle);
+                addVehicleToArr((T) newVehicle);
+
             }
         });
+
+        frame.removeVehicleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeVehicleFromArr();
+            }
+        });
+
+
     }
 
 
@@ -220,9 +243,9 @@ public class CarController<T extends Vehicle> {
                 frame.drawPanel.moveit(vehicles.indexOf(vehicle), x, y);
 
                 // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-            }
 
+            }
+            frame.drawPanel.repaint();
         }
     }
 //    private boolean DroveIntoWall(main.VehicleGeneral.Car car){
@@ -358,8 +381,20 @@ public class CarController<T extends Vehicle> {
     }
 
     public void addVehicleToArr(T vehicle){
-        vehicles.add(vehicle);
-        frame.viewVehicle(vehicle);
+        if (vehicles.size() < maxNrVehicles){
+            frame.viewVehicle(vehicle);
+            vehicles.add(vehicle);
+        }
+    }
+
+    public void removeVehicleFromArr(){
+        if (vehicles.size() > 0){
+            vehicles.remove(vehicles.size()-1);
+            frame.drawPanel.removeImage();
+            frame.drawPanel.removePoint();
+
+            System.out.println("size " + vehicles.size());
+        }
     }
 
     public Timer getTimer() {

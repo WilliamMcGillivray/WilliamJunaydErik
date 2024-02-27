@@ -18,12 +18,15 @@ public class DrawPanel extends JPanel{
     private Image saabImage;
     private Image volvoImage;
     private Image scaniaImage;
+
     private Image volvoWorkshopImage;
 
-    private Point volvoPoint = new Point(0,0);
-    private Point saabPoint = new Point(0,160);
-    private Point scaniaPoint = new Point(0,320);
-    private Point volvoWorkshopPoint = new Point(300,0);
+    private Point volvoWorkshopPoint;
+
+//    private Point volvoPoint = new Point(0,0);
+//    private Point saabPoint = new Point(0,160);
+//    private Point scaniaPoint = new Point(0,320);
+//    private Point volvoWorkshopPoint = new Point(300,0);
 
     private final int sizeOfArray = 10;
 
@@ -35,13 +38,26 @@ public class DrawPanel extends JPanel{
         this.points.add(point);
     }
 
+    public void removePoint(){
+        this.points.remove(points.size()-1);
+        System.out.println("size point " + points.size());
+    }
+
     public void addImage(Image image){
         this.images.add(image);
     }
 
+    public void removeImage(){
+        this.images.remove(images.size()-1);
+        System.out.println("size image " + images.size());
+    }
+
+    public void addWorkshopPoint(Point point){volvoWorkshopPoint = point;}
+
     // TODO: Make this general for all cars
     void moveit(int index, int x, int y){
         this.points.set(index, new Point(x,y));
+        System.out.println("Max" + this.points.size());
     }
 
     // Initializes the panel and reads the images
@@ -77,13 +93,13 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("brrrrrrroooooorrr");
-
-//        if (points.size() > 0){
-//            for (int i = 0; i < sizeOfArray; i++) {
-//                g.drawImage(images.get(i), points.get(i).x, points.get(i).y, null);
-//            }
-//        }
+        System.out.println("Points"+ points);
+        if (points.size() > 0){
+            for (int i = 0; i < points.size(); i++) {
+                g.drawImage(images.get(i), points.get(i).x, points.get(i).y, null);
+            }
+        }
+        g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 
     public Image getSaabImage() {
@@ -96,5 +112,9 @@ public class DrawPanel extends JPanel{
 
     public Image getScaniaImage() {
         return scaniaImage;
+    }
+
+    public Image getVolvoWorkshopImage() {
+        return volvoWorkshopImage;
     }
 }
