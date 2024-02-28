@@ -1,8 +1,5 @@
 package main;
 
-import main.VehicleGeneral.VehicleGenerator;
-import main.VehicleGeneral.VehicleModels.Saab95;
-import main.VehicleGeneral.VehicleModels.Scania;
 import main.VehicleGeneral.VehicleModels.Vehicle;
 import main.VehicleGeneral.VehicleModels.Volvo240;
 
@@ -10,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /*
@@ -19,12 +15,11 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController<T extends Vehicle> {
+public class CarController {
     // member fields:
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
-
 
 
     // The timer is started with a listener (see below) that executes the statements
@@ -34,131 +29,75 @@ public class CarController<T extends Vehicle> {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
 
-    private int panelWidth = 800;
-    private int panelHeight = 560;
-
-    private static int vehicleWidth = 100;
-    private static int vehicleHeight = 60;
-    private static int vehicleDistance = vehicleHeight;
-
     private Workshop<Volvo240> volvoWorkshop = new Workshop<>(4);
     private Point volvoWorkshopPoint = new Point(300,0);; //101x96
 
     // A list of vehicles
-    private ArrayList<T> vehicles = new ArrayList<>();
-    private int maxNrVehicles = 5;
+
+    private final int maxNrVehicles = 5;
+
+    private Buttons buttons = new Buttons();
+
+    private Boundaries boundaries = new Boundaries();
 
     private int count = 0;
 
     //methods:
 
 
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController<Vehicle> cc = new CarController();
-
-
-        cc.addVehicleToArr(VehicleGenerator.addVolvo(0, 0));
-        cc.addVehicleToArr(VehicleGenerator.addSaab(0, getYDistanceBetweenVehicles()));
-        cc.addVehicleToArr(VehicleGenerator.addScania(0, 2*getYDistanceBetweenVehicles()));
-
-
-        cc.volvoWorkshop.setLocation(new Point(300, 0));
-        cc.frame.drawPanel.addWorkshopPoint(cc.volvoWorkshop.getLocation());
-        cc.timer.start();
-
-        // Start a new view and send a reference of self
-
-
-        // Start the timer
-
-
-    }
 
     public CarController() {
         volvoWorkshop.setLocation(new Point(300, 0));
 
         frame = new CarView("CarSim 1.0");
+        frame.drawPanel.addWorkshopPoint(volvoWorkshop.getLocation());
         frame.startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    if (vehicle.getCurrentSpeed() < 1) {
-                        vehicle.startEngine();
-                    }
-                }
+                buttons.startEngines();
             }
         });
 
         frame.stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    vehicle.stopEngine();
-                }
+                buttons.stopEngines();
             }
         });
 
         frame.gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double gas = ((double) frame.gasAmount) / 100;
-                for (T vehicle : vehicles
-                )
-                    if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed() > 0) {
-                        {
-                            vehicle.gas(gas);
-                        }
-                    }
+                buttons.gas(frame.gasAmount, volvoWorkshop);
             }
         });
 
         frame.brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double gas = ((double) frame.gasAmount) / 100;
-                for (T vehicle : vehicles
-                ) {
-                    vehicle.brake(gas);
-
-                }
+                buttons.brake(frame.gasAmount);
             }
         });
 
         frame.turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    if (vehicle instanceof Saab95) {
-                        ((Saab95) vehicle).setTurboOn();
-                        System.out.println("Turbo is on");
-                    }
-                }
+                buttons.turboOn();
             }
         });
 
 
-        frame.turboOffButton.addActionListener(new ActionListener() {
+        frame.turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    if (vehicle instanceof Saab95) {
-                        ((Saab95) vehicle).setTurboOff();
-                        System.out.println("Turbo is off");
-                    }
-                }
+                buttons.turboOff();
             }
         });
 
         frame.liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    if (vehicle instanceof Scania) {
-                        ((Scania) vehicle).changeFlatbedAngle(70);
-
-                    }
-                }
+               buttons.liftBed();
 
             }
         });
@@ -166,54 +105,25 @@ public class CarController<T extends Vehicle> {
         frame.lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (T vehicle : vehicles) {
-                    if (vehicle instanceof Scania) {
-                        ((Scania) vehicle).changeFlatbedAngle(0);
-
-                    }
-                }
+                buttons.lowerBed();
             }
-
         });
 
         frame.addVehicleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] options = {"Add Random Car", "Add Volvo240","Add Saab95","Add Scania"};
-                int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Add Car",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-
-                double closestYPos;
-
-                if (vehicles.size() > 0) {
-                    closestYPos = vehicles.getLast().getLocation().getY();
-                } else {
-                    closestYPos = -vehicleDistance;
-                }
-
-                Vehicle newVehicle;
-
-                if (choice == 0) {
-                    newVehicle = VehicleGenerator.addRandomVehicle(0, (int) closestYPos + vehicleDistance);
-                }
-                else if (choice == 1) {
-                    newVehicle = VehicleGenerator.addVolvo(0, (int) closestYPos + vehicleDistance);
-                }
-                else if (choice == 2) {
-                    newVehicle = VehicleGenerator.addSaab(0, (int) closestYPos + vehicleDistance);
-                }
-                else {
-                    newVehicle = VehicleGenerator.addScania(0, (int) closestYPos + vehicleDistance);
-                }
-                addVehicleToArr((T) newVehicle);
-
+                if (buttons.getVehicles().size() < maxNrVehicles) {
+                    Vehicle newVehicle = buttons.addVehicle();
+                    frame.viewVehicle(newVehicle);}
             }
         });
 
         frame.removeVehicleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removeVehicleFromArr();
+                buttons.removeVehicle();
+                frame.drawPanel.removeImage();
+                frame.drawPanel.removePoint();
             }
         });
 
@@ -227,26 +137,31 @@ public class CarController<T extends Vehicle> {
     private class TimerListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            for (T vehicle : vehicles) {
+            ArrayList<Vehicle> vehicleList = buttons.getVehicles();
+            for (Vehicle vehicle : vehicleList) {
                 int x = (int) Math.round(vehicle.getLocation().getX());
                 int y = (int) Math.round(vehicle.getLocation().getY());
 
                 vehicle.move();
 
-                int[] list = checkBoundaries(vehicle, x, y);
+                int[] list = boundaries.checkBoundaries(vehicle, x, y);
                 x = list[0];
                 y = list[1];
 
                 if (vehicle instanceof Volvo240) {
-                    checkWorkshop((Volvo240) vehicle, x, y);}
+                    boundaries.checkWorkshop((Volvo240) vehicle, x, y, volvoWorkshop);}
 
-                frame.drawPanel.moveit(vehicles.indexOf(vehicle), x, y);
+                frame.drawPanel.moveit(buttons.getVehicles().indexOf(vehicle), x, y);
 
                 // repaint() calls the paintComponent method of the panel
 
             }
             frame.drawPanel.repaint();
         }
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 //    private boolean DroveIntoWall(main.VehicleGeneral.Car car){
 //        boolean isTooFarRight = car.getLocation().getX() > panelWidth - carWidth;
@@ -256,30 +171,34 @@ public class CarController<T extends Vehicle> {
 //        //boolean isTooFarDown = car.getLocation().getY() < panelHeight - carHeight;
 //    }
 
-    void checkWorkshop(Vehicle vehicle, int x, int y) {
-        if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101 &&
-                !volvoWorkshop.getCarsInWorkshop().contains(vehicle)){
-            if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){
-                count += 1;
-                System.out.println("count: " + count);
-                Point wallPoint;
-                wallPoint = new Point((int) volvoWorkshop.getLocation().getX(), (int) volvoWorkshop.getLocation().getY());
-                vehicle.setLocation(wallPoint);
-                vehicle.stopEngine();
-                x = (int) Math.round(vehicle.getLocation().getX());
-                y = (int) Math.round(vehicle.getLocation().getY());
-                System.out.println(volvoWorkshop.getCarsInWorkshop());
-                volvoWorkshop.acceptCar((Volvo240) vehicle);
+//    void checkWorkshop(Vehicle vehicle, int x, int y, volvoWorkshop) {
+//
+//
+//    }
+//        if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101 &&
+//                !volvoWorkshop.getCarsInWorkshop().contains(vehicle)){
+//            if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){
+//                count += 1;
+//                System.out.println("count: " + count);
+//                Point wallPoint;
+//                wallPoint = new Point((int) volvoWorkshop.getLocation().getX(), (int) volvoWorkshop.getLocation().getY());
+//                vehicle.setLocation(wallPoint);
+//                vehicle.stopEngine();
+//                x = (int) Math.round(vehicle.getLocation().getX());
+//                y = (int) Math.round(vehicle.getLocation().getY());
+//                System.out.println(volvoWorkshop.getCarsInWorkshop());
+//                volvoWorkshop.acceptCar((Volvo240) vehicle);
+//
+//            }
+//        }
+//        if (x < volvoWorkshop.getLocation().getX() - vehicleWidth || x > volvoWorkshop.getLocation().getX() + 101) {
+//            if (volvoWorkshop.getCarsInWorkshop().contains(vehicle)) {
+//                volvoWorkshop.releaseCar();
+//            }
+//        }
+//    }
 
-            }
-        }
-        if (x < volvoWorkshop.getLocation().getX() - vehicleWidth || x > volvoWorkshop.getLocation().getX() + 101) {
-            if (volvoWorkshop.getCarsInWorkshop().contains(vehicle)) {
-                volvoWorkshop.releaseCar();
-            }
-        }
-    }
-
+/*
     int[] checkBoundaries(Vehicle vehicle, int x, int y) {
         if (x > panelWidth - vehicleWidth || x < 0) {
             Point wallPoint;
@@ -301,103 +220,28 @@ public class CarController<T extends Vehicle> {
             y = (int) Math.round(vehicle.getLocation().getY());
         }
         return new int[] {x, y};
-    }
+*/
 
-    // Calls the gas method for each car once
-//    void gas(int amount) {
-//        double gas = ((double) amount)/100;
-//        for (T vehicle : vehicles
-//                ) if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed()>0) {{
-//            vehicle.gas(gas);
-//        }}
+//    public ArrayList<T> getVehicles() {
+//        return vehicles;
+//    }
+
+//    public void addVehicleToArr(T vehicle){
+//        if (vehicles.size() < maxNrVehicles){
+//            frame.viewVehicle(vehicle);
+//            vehicles.add(vehicle);
+////        }
 //    }
 //
-//    void brake(int amount) {
-//        double gas = ((double) amount)/100;
-//        for (T vehicle : vehicles
-//        ) {
-//                vehicle.brake(gas);
+//    public void removeVehicleFromArr(){
+//        if (vehicles.size() > 0){
+//            vehicles.remove(vehicles.size()-1);
+//            frame.drawPanel.removeImage();
+//            frame.drawPanel.removePoint();
 //
-//        }
-//    }
-//
-//    void startEngines() {
-//        for (T vehicle : vehicles
-//        ) {
-//            if (vehicle.getCurrentSpeed() < 1) {
-//                vehicle.startEngine();
-//            }
-//        }
-//    }
-//    void stopEngines() {
-//        for (T vehicle : vehicles
-//        ) {
-//            vehicle.stopEngine();
-//        }
-//    }
-//
-//    void turboOn() {
-//        for (T vehicle : vehicles) {
-//            if(vehicle instanceof Saab95) {
-//                ((Saab95) vehicle).setTurboOn();
-//                System.out.println("Turbo is on");
-//            }
-//        }
-//    }
-//
-//    void turboOff() {
-//        for (T vehicle : vehicles) {
-//            if(vehicle instanceof Saab95) {
-//                ((Saab95) vehicle).setTurboOff();
-//                System.out.println("Turbo is off");
-//            }
-//        }
-//    }
-//
-//    void liftBed(){
-//        for (T vehicle : vehicles) {
-//            if(vehicle instanceof Scania) {
-//                ((Scania) vehicle).changeFlatbedAngle(70);
-//
-//            }
-//        }
-//    }
-//
-//    void lowerBed(){
-//        for (T vehicle : vehicles) {
-//            if(vehicle instanceof Scania) {
-//                ((Scania) vehicle).changeFlatbedAngle(0);
-//
-//            }
+//            System.out.println("size " + vehicles.size());
 //        }
 //    }
 
-    public static int getYDistanceBetweenVehicles(){
-        return vehicleDistance;
-    }
 
-    public ArrayList<T> getVehicles() {
-        return vehicles;
-    }
-
-    public void addVehicleToArr(T vehicle){
-        if (vehicles.size() < maxNrVehicles){
-            frame.viewVehicle(vehicle);
-            vehicles.add(vehicle);
-        }
-    }
-
-    public void removeVehicleFromArr(){
-        if (vehicles.size() > 0){
-            vehicles.remove(vehicles.size()-1);
-            frame.drawPanel.removeImage();
-            frame.drawPanel.removePoint();
-
-            System.out.println("size " + vehicles.size());
-        }
-    }
-
-    public Timer getTimer() {
-        return timer;
-    }
 }
