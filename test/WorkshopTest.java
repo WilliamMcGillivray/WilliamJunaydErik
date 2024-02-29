@@ -1,7 +1,7 @@
-import main.VehicleGeneral.VehicleModels.Car;
-import main.VehicleGeneral.VehicleModels.Saab95;
-import main.VehicleGeneral.VehicleModels.Volvo240;
-import main.Workshop;
+import main.model.VehicleModels.Car;
+import main.model.VehicleModels.Saab95;
+import main.model.VehicleModels.Volvo240;
+import main.model.Workshop;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

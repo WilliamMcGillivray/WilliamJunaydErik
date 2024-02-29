@@ -1,5 +1,5 @@
-package main.VehicleGeneral;
-import main.VehicleGeneral.VehicleModels.*;
+package main.model;
+import main.model.VehicleModels.*;
 import java.util.Random;
 
 import java.awt.*;

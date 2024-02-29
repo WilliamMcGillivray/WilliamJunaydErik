@@ -1,18 +1,16 @@
-package main;
+package main.model;
 
-import main.VehicleGeneral.VehicleModels.Volvo240;
-import main.VehicleGeneral.VehicleModels.Vehicle;
+import main.model.VehicleModels.Volvo240;
+import main.model.VehicleModels.Vehicle;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Boundaries {
 
     private final int panelWidth = 800;
     private final static int vehicleWidth = 100;
 
-    int[] checkBoundaries(Vehicle vehicle, int x, int y) {
+    public int[] checkBoundaries(Vehicle vehicle, int x, int y) {
         if (x > panelWidth - vehicleWidth || x < 0) {
             Point wallPoint;
 
@@ -35,7 +33,7 @@ public class Boundaries {
         return new int[] {x, y};
     }
 
-    void checkWorkshop(Vehicle vehicle, int x, int y, Workshop volvoWorkshop) {
+    public void checkWorkshop(Vehicle vehicle, int x, int y, Workshop volvoWorkshop) {
         if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101 &&
                 !volvoWorkshop.getCarsInWorkshop().contains(vehicle)){
             if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){

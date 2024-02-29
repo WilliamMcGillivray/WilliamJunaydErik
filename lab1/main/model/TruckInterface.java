@@ -1,4 +1,4 @@
-package main.VehicleGeneral;
+package main.model;
 
 public interface TruckInterface {
     boolean checkSpeedIsZero();

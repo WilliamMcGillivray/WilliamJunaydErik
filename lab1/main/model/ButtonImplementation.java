@@ -1,14 +1,13 @@
-package main;
+package main.model;
 
-import main.VehicleGeneral.VehicleGenerator;
-import main.VehicleGeneral.VehicleModels.Saab95;
-import main.VehicleGeneral.VehicleModels.Scania;
-import main.VehicleGeneral.VehicleModels.Vehicle;
+import main.model.VehicleModels.Saab95;
+import main.model.VehicleModels.Scania;
+import main.model.VehicleModels.Vehicle;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Buttons<T extends Vehicle> {
+public class ButtonImplementation<T extends Vehicle> {
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -16,10 +15,12 @@ public class Buttons<T extends Vehicle> {
 
     private ArrayList<T> vehicles = new ArrayList<>();
 
+    private VehicleGenerator vg = new VehicleGenerator();
+
 
         // Calls the gas method for each car once
 
-    void gas(double amount, Workshop volvoWorkshop) {
+    public void gas(double amount, Workshop volvoWorkshop) {
         double gas = amount/100;
         for (T vehicle : vehicles
                 ) if (!volvoWorkshop.getCarsInWorkshop().contains(vehicle) && vehicle.getCurrentSpeed()>0) {{
@@ -27,16 +28,15 @@ public class Buttons<T extends Vehicle> {
         }}
     }
 
-    void brake(int amount) {
+    public void brake(int amount) {
         double gas = ((double) amount)/100;
         for (T vehicle : vehicles
         ) {
                 vehicle.brake(gas);
-
         }
     }
 
-    void startEngines() {
+    public void startEngines() {
         for (T vehicle : vehicles
         ) {
             if (vehicle.getCurrentSpeed() < 1) {
@@ -44,14 +44,14 @@ public class Buttons<T extends Vehicle> {
             }
         }
     }
-    void stopEngines() {
+    public void stopEngines() {
         for (T vehicle : vehicles
         ) {
             vehicle.stopEngine();
         }
     }
 
-    void turboOn() {
+    public void turboOn() {
         for (T vehicle : vehicles) {
             if(vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOn();
@@ -60,7 +60,7 @@ public class Buttons<T extends Vehicle> {
         }
     }
 
-    void turboOff() {
+    public void turboOff() {
         for (T vehicle : vehicles) {
             if(vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOff();
@@ -69,20 +69,18 @@ public class Buttons<T extends Vehicle> {
         }
     }
 
-    void liftBed(){
+    public void liftBed(){
         for (T vehicle : vehicles) {
             if(vehicle instanceof Scania) {
                 ((Scania) vehicle).changeFlatbedAngle(70);
-
             }
         }
     }
 
-    void lowerBed(){
+    public void lowerBed(){
         for (T vehicle : vehicles) {
             if(vehicle instanceof Scania) {
                 ((Scania) vehicle).changeFlatbedAngle(0);
-
             }
         }
     }
@@ -100,7 +98,7 @@ public class Buttons<T extends Vehicle> {
 
 
     public Vehicle addVehicle() {
-        Object[] options = {"Add Random Car", "Add Volvo240","Add Saab95","Add Scania"};
+        String[] options = {"Add Random Car", "Add Volvo240","Add Saab95","Add Scania"};
         int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Add Car",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
@@ -115,16 +113,16 @@ public class Buttons<T extends Vehicle> {
         Vehicle newVehicle;
 
         if (choice == 0) {
-            newVehicle = VehicleGenerator.addRandomVehicle(0, (int) closestYPos + vehicleHeight);
+            newVehicle = vg.addRandomVehicle(0, (int) closestYPos + vehicleHeight);
         }
         else if (choice == 1) {
-            newVehicle = VehicleGenerator.addVolvo(0, (int) closestYPos + vehicleHeight);
+            newVehicle = vg.addVolvo(0, (int) closestYPos + vehicleHeight);
         }
         else if (choice == 2) {
-            newVehicle = VehicleGenerator.addSaab(0, (int) closestYPos + vehicleHeight);
+            newVehicle = vg.addSaab(0, (int) closestYPos + vehicleHeight);
         }
         else {
-            newVehicle = VehicleGenerator.addScania(0, (int) closestYPos + vehicleHeight);
+            newVehicle = vg.addScania(0, (int) closestYPos + vehicleHeight);
         }
         vehicles.add((T) newVehicle);
         return newVehicle;

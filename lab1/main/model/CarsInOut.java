@@ -1,6 +1,6 @@
-package main.VehicleGeneral;
+package main.model;
 
-import main.VehicleGeneral.VehicleModels.Car;
+import main.model.VehicleModels.Car;
 
 import java.util.Stack;
 

@@ -1,7 +1,7 @@
-package main;
+package main.model;
 
-import main.VehicleGeneral.VehicleModels.Car;
-import main.VehicleGeneral.CarsInOut;
+import main.model.VehicleModels.Car;
+import main.model.CarsInOut;
 
 import java.awt.*;
 import java.util.Stack;

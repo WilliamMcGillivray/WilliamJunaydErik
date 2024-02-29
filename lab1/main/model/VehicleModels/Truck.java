@@ -1,6 +1,6 @@
-package main.VehicleGeneral.VehicleModels;
+package main.model.VehicleModels;
 
-import main.VehicleGeneral.TruckInterface;
+import main.model.TruckInterface;
 
 import java.awt.*;
 

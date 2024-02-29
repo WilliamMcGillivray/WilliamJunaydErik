@@ -1,4 +1,4 @@
-package main.VehicleGeneral.VehicleModels;
+package main.model.VehicleModels;
 
 import java.awt.*;
 
