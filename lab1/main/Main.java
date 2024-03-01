@@ -2,23 +2,28 @@ package main;
 
 
 import main.controller.CarController;
-import main.model.ButtonImplementation;
+import main.model.Model;
 import main.model.VehicleGenerator;
 import main.model.VehicleModels.Vehicle;
 import main.model.VehicleModels.Volvo240;
 import main.model.Workshop;
-import main.view.CarView;
+import main.view.Buttons;
+import main.view.DrawPanel;
 
 public class Main {
 
     public static void main(String[] args) {
         VehicleGenerator vg = new VehicleGenerator();
-        CarView frame = new CarView("CarSim 1.0");
-        vg.addObserver(frame);
-        ButtonImplementation<Vehicle> button = new ButtonImplementation<>(vg);
-        Workshop<Volvo240> workshop = new Workshop<>(4);
-        CarController cc = new CarController(frame, button, workshop);
-        cc.getTimer().start();
+
+        Model<Vehicle> aModel = new Model<>(vg);
+        DrawPanel view = new DrawPanel(800,560, aModel);
+        aModel.addObserver(view);
+
+        Buttons buttons = new Buttons("CarSim 1.0", view);
+
+        CarController cc = new CarController(buttons, aModel);
+
+        aModel.getTimer().start();
 
 
 //        bl.addVehicle(VehicleGenerator.addVolvo(0, 0

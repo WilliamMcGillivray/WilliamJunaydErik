@@ -3,8 +3,6 @@ import main.model.Movable;
 
 import java.awt.*;
 
-//WASSUUUUPPPP
-//tjjjjjenare
 
 abstract public class Vehicle implements Movable {
     private int nrDoors; // Number of doors on the car

@@ -1,6 +1,6 @@
 package main.view;
 
-import main.model.AddVehicleObserver;
+import main.model.Observer;
 import main.model.VehicleModels.Vehicle;
 
 import javax.swing.*;
@@ -16,11 +16,10 @@ import java.awt.*;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame implements AddVehicleObserver {
+public class Buttons extends JFrame {
     private static final int X = 800;
     private static final int Y = 800;
 
-    public DrawPanel drawPanel = new DrawPanel(X, Y-240);
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
@@ -39,19 +38,23 @@ public class CarView extends JFrame implements AddVehicleObserver {
     public JButton startButton = new JButton("Start all cars");
     public JButton stopButton = new JButton("Stop all cars");
 
+    public DrawPanel drawPanel;
     // Constructor
-    public CarView(String framename){
-        initComponents(framename);
+    public Buttons(String framename, DrawPanel drawP){
+        drawPanel = drawP;
+        initComponents(framename, drawP);
     }
+
+
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
-    private void initComponents(String title) {
+    private void initComponents(String title, DrawPanel drawP) {
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        this.add(drawPanel);
+        this.add(drawP);
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -62,6 +65,7 @@ public class CarView extends JFrame implements AddVehicleObserver {
         gasSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                System.out.println("gasamount " + gasAmount);
             }
         });
 
@@ -114,8 +118,8 @@ public class CarView extends JFrame implements AddVehicleObserver {
 //        drawPanel.addPoint(vehicle.getLocation());
 //    }
 
-    public void observeVehicle(Vehicle vehicle){
-        drawPanel.addImage(vehicle.getImage());
-        drawPanel.addPoint(vehicle.getLocation());
-    }
+//    public void observeVehicle(Vehicle vehicle){
+//        drawPanel.addImage(vehicle.getImage());
+//        drawPanel.addPoint(vehicle.getLocation());
+//    }
 }
