@@ -7,10 +7,10 @@ import java.awt.*;
 
 public class Boundaries {
 
-    private final int panelWidth = 800;
+    private final static int panelWidth = 800;
     private final static int vehicleWidth = 100;
 
-    public int[] checkBoundaries(Vehicle vehicle, int x, int y) {
+    public static int[] checkBoundaries(Vehicle vehicle, int x, int y) {
         if (x > panelWidth - vehicleWidth || x < 0) {
             Point wallPoint;
 
@@ -33,7 +33,7 @@ public class Boundaries {
         return new int[] {x, y};
     }
 
-    public void checkWorkshop(Vehicle vehicle, int x, int y, Workshop volvoWorkshop) {
+    public static void checkWorkshop(Vehicle vehicle, int x, int y, Workshop volvoWorkshop) {
         if (x > volvoWorkshop.getLocation().getX() - vehicleWidth && x < volvoWorkshop.getLocation().getX() + 101 &&
                 !volvoWorkshop.getCarsInWorkshop().contains(vehicle)){
             if (y >= volvoWorkshop.getLocation().getY() && y <= volvoWorkshop.getLocation().getY() + 96){

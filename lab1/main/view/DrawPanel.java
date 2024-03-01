@@ -1,26 +1,26 @@
 package main.view;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 
 // This panel represents the animated part of the view with the car images.
 
 public class DrawPanel extends JPanel{
-    private Image saabImage;
-    private Image volvoImage;
-    private Image scaniaImage;
-
+//    private Image saabImage;
+//    private Image volvoImage;
+//    private Image scaniaImage;
+//
     private Image volvoWorkshopImage;
 
     private Point volvoWorkshopPoint;
 
     private final int sizeOfArray = 10;
 
-
+    //private ArrayList<Image> workshopImages = new ArrayList<>(sizeOfArray);
     private ArrayList<Image> images = new ArrayList<>(sizeOfArray);
     private ArrayList<Point> points = new ArrayList<>(sizeOfArray);
 
@@ -36,6 +36,10 @@ public class DrawPanel extends JPanel{
     public void addImage(Image image){
         this.images.add(image);
     }
+
+//    public void addWorkshopImage(Image image){
+//        this.workshopImages.add(image);
+//    }
 
     public void removeImage(){
         this.images.remove(images.size()-1);
@@ -58,9 +62,9 @@ public class DrawPanel extends JPanel{
 
         // Print an error message in case file is not found with a try/catch block
         try {
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Volvo240.jpg"));
-            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Saab95.jpg"));
-            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Scania.jpg"));
+//            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Volvo240.jpg"));
+//            saabImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Saab95.jpg"));
+//            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/Scania.jpg"));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("../../pics/VolvoBrand.jpg"));
 
         } catch (IOException ex)
@@ -81,21 +85,26 @@ public class DrawPanel extends JPanel{
             }
         }
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+//        if (workshopImages.size() > 0){
+//            for (Image image : workshopImages) {
+//                g.drawImage(image, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
+//            }
+//        }
     }
 
-    public Image getSaabImage() {
-        return saabImage;
-    }
-
-    public Image getVolvoImage() {
-        return volvoImage;
-    }
-
-    public Image getScaniaImage() {
-        return scaniaImage;
-    }
-
-    public Image getVolvoWorkshopImage() {
-        return volvoWorkshopImage;
-    }
+//    public Image getSaabImage() {
+//        return saabImage;
+//    }
+//
+//    public Image getVolvoImage() {
+//        return volvoImage;
+//    }
+//
+//    public Image getScaniaImage() {
+//        return scaniaImage;
+//    }
+//
+//    public Image getVolvoWorkshopImage() {
+//        return volvoWorkshopImage;
+//    }
 }

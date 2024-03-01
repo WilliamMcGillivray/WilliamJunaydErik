@@ -1,9 +1,7 @@
 package main.view;
 
-import main.model.VehicleModels.Saab95;
-import main.model.VehicleModels.Scania;
+import main.model.AddVehicleObserver;
 import main.model.VehicleModels.Vehicle;
-import main.model.VehicleModels.Volvo240;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -18,7 +16,7 @@ import java.awt.*;
  * TODO: Write more actionListeners and wire the rest of the buttons
  **/
 
-public class CarView extends JFrame{
+public class CarView extends JFrame implements AddVehicleObserver {
     private static final int X = 800;
     private static final int Y = 800;
 
@@ -105,14 +103,19 @@ public class CarView extends JFrame{
     }
 
     // Adds a new vehicle to the view by adding an image and the location of that car
-    public void viewVehicle(Vehicle vehicle){
-        if (vehicle instanceof Volvo240) {
-            drawPanel.addImage(drawPanel.getVolvoImage());
-        } else if (vehicle instanceof Saab95) {
-            drawPanel.addImage(drawPanel.getSaabImage());
-        } else if (vehicle instanceof Scania) {
-            drawPanel.addImage(drawPanel.getScaniaImage());
-        }
+//    public void viewVehicle(Vehicle vehicle){
+//        if (vehicle instanceof Volvo240) {
+//            drawPanel.addVehicleImage(drawPanel.getVolvoImage());
+//        } else if (vehicle instanceof Saab95) {
+//            drawPanel.addVehicleImage(drawPanel.getSaabImage());
+//        } else if (vehicle instanceof Scania) {
+//            drawPanel.addVehicleImage(drawPanel.getScaniaImage());
+//        }
+//        drawPanel.addPoint(vehicle.getLocation());
+//    }
+
+    public void observeVehicle(Vehicle vehicle){
+        drawPanel.addImage(vehicle.getImage());
         drawPanel.addPoint(vehicle.getLocation());
     }
 }

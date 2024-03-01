@@ -1,5 +1,5 @@
 package main.model.VehicleModels;
-import main.Movable;
+import main.model.Movable;
 
 import java.awt.*;
 
@@ -15,6 +15,9 @@ abstract public class Vehicle implements Movable {
 
     private double angle; // Direction the car travels in degrees
     private Point location;
+
+    private Image image;
+
 
     public Vehicle(int nrDoors, Color color, double enginePower, String modelname){
         this.nrDoors = nrDoors;
@@ -66,7 +69,6 @@ abstract public class Vehicle implements Movable {
     }
 
     public double getCurrentSpeed(){
-
         return this.currentSpeed;
     }
 
@@ -90,6 +92,8 @@ abstract public class Vehicle implements Movable {
     }
 
     protected abstract double speedFactor();
+
+    protected abstract void readImage();
 
 
     private void incrementSpeed(double amount){
@@ -116,7 +120,6 @@ abstract public class Vehicle implements Movable {
         }
         else {throw new IllegalArgumentException("Has to be between 0 and 1");
         }
-
     }
 
     public double getAngle(){
@@ -132,12 +135,16 @@ abstract public class Vehicle implements Movable {
         return location;
     }
 
-
     public String getModelName(){
         return this.modelName;
     }
 
+    public Image getImage(){
+        return this.image;
+    }
+
 }
+
 
 
 

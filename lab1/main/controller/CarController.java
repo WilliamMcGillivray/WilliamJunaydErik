@@ -33,21 +33,23 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
 
-    private Workshop<Volvo240> volvoWorkshop = new Workshop<>(4);
+    private Workshop<Volvo240> volvoWorkshop;
     private Point volvoWorkshopPoint = new Point(300, 0);
 
     private final int maxNrVehicles = 5;
 
-    private ButtonImplementation buttons = new ButtonImplementation();
+    private final ButtonImplementation buttons;
 
-    private Boundaries boundaries = new Boundaries();
+    private static Boundaries boundaries = new Boundaries();
 
     //methods:
 
 
-    public CarController() {
+    public CarController(CarView view, ButtonImplementation buttonImplementation, Workshop<Volvo240> workshop) {
+        frame = view;
+        buttons = buttonImplementation;
+        volvoWorkshop = workshop;
         volvoWorkshop.setLocation(volvoWorkshopPoint);
-        frame = new CarView("CarSim 1.0");
         frame.drawPanel.addWorkshopPoint(volvoWorkshop.getLocation());
         frame.startButton.addActionListener(new ActionListener() {
             @Override
@@ -111,8 +113,9 @@ public class CarController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (buttons.getVehicles().size() < maxNrVehicles) {
-                    Vehicle newVehicle = buttons.addVehicle();
-                    frame.viewVehicle(newVehicle);
+                    buttons.addVehicle();
+                    //Vehicle newVehicle =
+                    //frame.viewVehicle(newVehicle);
                 }
             }
         });

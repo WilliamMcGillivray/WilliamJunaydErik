@@ -15,10 +15,15 @@ public class ButtonImplementation<T extends Vehicle> {
 
     private ArrayList<T> vehicles = new ArrayList<>();
 
-    private VehicleGenerator vg = new VehicleGenerator();
+    private VehicleGenerator vg;
 
 
         // Calls the gas method for each car once
+
+    public ButtonImplementation(VehicleGenerator VG){
+        vg = VG;
+
+    }
 
     public void gas(double amount, Workshop volvoWorkshop) {
         double gas = amount/100;

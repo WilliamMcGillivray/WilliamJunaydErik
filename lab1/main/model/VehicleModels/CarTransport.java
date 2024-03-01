@@ -89,7 +89,7 @@ public class CarTransport<A extends Car> extends Truck {
         return carListTool.getCarList();
     }
 
-
+    protected void readImage(){}
 
 }
 
