@@ -178,8 +178,6 @@ public class Model<T extends Vehicle> {
 //                frame.drawPanel.moveit(buttons.getVehicles().indexOf(vehicle), x, y);
 
                 // repaint() calls the paintComponent method of the panel
-
-
             }
             notifyObserver();
 //            frame.drawPanel.repaint();
