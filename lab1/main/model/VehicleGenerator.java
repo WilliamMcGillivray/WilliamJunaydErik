@@ -10,8 +10,6 @@ public class VehicleGenerator {
 
     private static final Random random = new Random();
 
-    private static ArrayList<Observer> observerList = new ArrayList<>();
-
 
     public static Volvo240 addVolvo(int x, int y){
         Volvo240 volvo240 = new Volvo240();

@@ -106,20 +106,5 @@ public class Buttons extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    // Adds a new vehicle to the view by adding an image and the location of that car
-//    public void viewVehicle(Vehicle vehicle){
-//        if (vehicle instanceof Volvo240) {
-//            drawPanel.addVehicleImage(drawPanel.getVolvoImage());
-//        } else if (vehicle instanceof Saab95) {
-//            drawPanel.addVehicleImage(drawPanel.getSaabImage());
-//        } else if (vehicle instanceof Scania) {
-//            drawPanel.addVehicleImage(drawPanel.getScaniaImage());
-//        }
-//        drawPanel.addPoint(vehicle.getLocation());
-//    }
 
-//    public void observeVehicle(Vehicle vehicle){
-//        drawPanel.addImage(vehicle.getImage());
-//        drawPanel.addPoint(vehicle.getLocation());
-//    }
 }

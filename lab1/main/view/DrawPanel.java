@@ -14,10 +14,7 @@ import java.io.IOException;
 // This panel represents the animated part of the view with the car images.
 
 public class DrawPanel extends JPanel implements Observer {
-//    private Image saabImage;
-//    private Image volvoImage;
-//    private Image scaniaImage;
-//
+
     private Image volvoWorkshopImage;
 
     private Point volvoWorkshopPoint;
@@ -28,35 +25,6 @@ public class DrawPanel extends JPanel implements Observer {
 
     private Model model;
 
-//    public void addPoint(Point point){
-//        this.points.add(point);
-//    }
-//
-//    public void removePoint(){
-//        this.points.remove(points.size()-1);
-//        System.out.println("size point " + points.size());
-//    }
-
-//    public void addImage(Image image){
-//        this.images.add(image);
-//    }
-
-//    public void addWorkshopImage(Image image){
-//        this.workshopImages.add(image);
-//    }
-
-//    public void removeImage(){
-//        this.images.remove(images.size()-1);
-//        System.out.println("size image " + images.size());
-//    }
-//
-//    public void addWorkshopPoint(Point point){volvoWorkshopPoint = point;}
-//
-//    // TODO: Make this general for all cars
-//    public void moveit(int index, int x, int y){
-//        this.points.set(index, new Point(x,y));
-//        System.out.println("Max" + this.points.size());
-//    }
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y, Model aModel) {
@@ -92,11 +60,7 @@ public class DrawPanel extends JPanel implements Observer {
             }
         }
         g.drawImage(volvoWorkshopImage, model.getWorkshopPosition().x, model.getWorkshopPosition().y, null);
-//        if (workshopImages.size() > 0){
-//            for (Image image : workshopImages) {
-//                g.drawImage(image, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
-//            }
-//        }
+
     }
 
 }

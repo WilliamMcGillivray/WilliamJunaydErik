@@ -33,7 +33,7 @@ public class Model<T extends Vehicle> {
 
     private Workshop<Volvo240> volvoWorkshop = new Workshop(5);
 
-    // Calls the gas method for each car once
+
 
     public Model(VehicleGenerator VG){
         vg = VG;
@@ -47,6 +47,12 @@ public class Model<T extends Vehicle> {
 
     public void removeObserver(Observer observer){
         observerList.remove(observer);
+    }
+
+    private static void notifyObserver(){
+        for (Observer observer : observerList) {
+            observer.update();
+        }
     }
 
     public void gas(double amount) {
@@ -174,21 +180,14 @@ public class Model<T extends Vehicle> {
                 if (vehicle instanceof Volvo240) {
                     boundaries.checkWorkshop((Volvo240) vehicle, x, y, volvoWorkshop);
                 }
-
-//                frame.drawPanel.moveit(buttons.getVehicles().indexOf(vehicle), x, y);
-
-                // repaint() calls the paintComponent method of the panel
+                
             }
             notifyObserver();
-//            frame.drawPanel.repaint();
+
         }
     }
 
-    private static void notifyObserver(){
-        for (Observer observer : observerList) {
-            observer.update();
-        }
-    }
+
 
     public Point getWorkshopPosition(){
         return volvoWorkshopPoint;
